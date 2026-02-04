@@ -22,10 +22,11 @@
   - Product Supply
   - Product Sale
   - Customer
-
+  - Supplier
+    
 > [!IMPORTANT]
 > **UML**
-> ![UML](./UML.png)
+> ![](./UML.png)
     
 ## UI Layout
   - Home
