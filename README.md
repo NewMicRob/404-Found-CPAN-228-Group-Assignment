@@ -23,9 +23,9 @@
   - Product Sale
   - Customer
   - Supplier
-    
-> [!IMPORTANT]
+
 > **UML**
+> [!IMPORTANT]
 > ![](./UML.png)
     
 ## UI Layout
