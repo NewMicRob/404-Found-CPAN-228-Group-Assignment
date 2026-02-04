@@ -25,7 +25,7 @@
 
 > [!IMPORTANT]
 > **UML**
-> ![UML](~~~~~~~~~~`)
+> ![UML](./UML.png)
     
 ## UI Layout
   - Home
