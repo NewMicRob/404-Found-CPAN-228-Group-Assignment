@@ -24,7 +24,7 @@
   - Customer
   - Supplier
 
-> **UML**
+## UML
 > [!IMPORTANT]
 > ![](./UML.png)
     
