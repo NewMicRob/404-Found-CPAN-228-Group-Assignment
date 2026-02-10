@@ -24,9 +24,9 @@
   - Customer
   - Supplier
 
-## UML
+## Diagram
 > [!IMPORTANT]
-> ![](./UML.png)
+> ![](./DomainDiagram.png)
     
 ## UI Layout
   - Home
