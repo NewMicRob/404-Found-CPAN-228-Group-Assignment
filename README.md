@@ -30,13 +30,33 @@
     
 ## UI Layout
   - Home
-    - Shows Inventory
+    - Shows Summary
   - Product View
     - Searchable table, that displays all items
-  - Product Form
-    - Allows input of new products
+  - Warehouse
+    - Allows for searches based on warehouse selected.
   - Login Page
     - Security to allow management of the system
+
+## Home/Dashboard
+> [!IMPORTANT]
+> ![](./Home:DashboardWireFrame.png)
+
+## Inventory
+> [!IMPORTANT]
+> ![](./InventoryWireframe.png)
+
+## Login
+> [!IMPORTANT]
+> ![](./LoginWireframe.png)
+
+## Products
+> [!IMPORTANT]
+> ![](./ProductsWireFrame.png)
+
+## Warehouse
+> [!IMPORTANT]
+> ![](./WarehouseWireframe.png)
 
 ## How To Run
   ### Environment
