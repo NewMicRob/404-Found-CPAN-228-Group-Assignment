@@ -53,18 +53,18 @@
 | User  | Yes                                       | Yes                  | No                              
     
 ## UI Layout
-**Login Page**  
-    - Provides secure user authentication to access the system.  
-**Home**  
-    - Shows a summary of product stock across all warehouses.
-**Products**  
-    - Displays a searchable table of all products.
-**Warehouses**  
-    - Allows to search and view information based on the selected warehouse. 
-**Inventory**  
-    - Allows users to manage and update product inventory. 
-**Add New Product**  
-    - Provides a form to add a new product.
+### Login Page
+* Provides secure user authentication to access the system.
+### Home
+* Shows a summary of product stock across all warehouses.
+### Products
+* Displays a searchable table of all products.
+### Warehouses
+* Allows to search and view information based on the selected warehouse.
+### Inventory
+* Allows users to manage and update product inventory.
+### Add New Product
+* Provides a form to add a new product.
 
 ## UI WireFrame
 > [!IMPORTANT]
