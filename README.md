@@ -7,7 +7,7 @@
   - **[Iuliia Bazhutina](https://github.com/IuliiaBazhutina)**
     - 
   - **[Michael Newman](https://github.com/NewMicRob)**
-    -
+    - My name is Michael R Newman, I am looking forward to creating our webisite as a member of 404 Found, being that this is my final semester in the computer programming program this will be one of my final projects while being enrolled in the Computer Programming Program at Humber Polytechnic.
 
 ## Adventure of choice
   - Category 1: E-Commerce Platform (eg: Clothes Warehouse) 
