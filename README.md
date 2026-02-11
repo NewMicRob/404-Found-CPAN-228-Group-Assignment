@@ -19,28 +19,12 @@
 
 ## Why we chose this progect
   - StockFlow is a traditional business domain with clear CRUD operations and real-world complexity.
-  - Scenario: Build an inventory management system for a fashion warehouse with multi-location distribution(it doesn't have to be fashion). 
-  - Core Domain: Item (product), Brand, Inventory, Distribution Centre 
-
-## Project name
-  - StockFlow
-
-## Why we chose this progect
-  - StockFlow is a traditional business domain with clear CRUD operations and real-world complexity.
 
 ## Project Overview  
   - StockFlow is an e-commerce website that will incorporate an inventory management system accross multiple warehouses. 
   - StockFlow will incorporate being able to create new products and warehouses, register product supplies and sales, check and update product inventory, generate reports.
-  - StockFlow is an e-commerce website that will incorporate an inventory management system accross multiple warehouses. 
-  - StockFlow will incorporate being able to create new products and warehouses, register product supplies and sales, check and update product inventory, generate reports.
 
 ## Core Concepts  
-  - The Admin creates products, warehouses, and initial inventory as of the app’s start date.
-  - Users (Warehouse Workers) record all product supplies and sales, keeping stock consistent across warehouses.
-  - Users can check the inventory of a specific product or view products by category.
-  - Users can generate a report of all products in a selected warehouse.
-  - Users can view the total inventory across all warehouses on the Home page.
-  - Users can create customized inventory reports using various filters.
   - The Admin creates products, warehouses, and initial inventory as of the app’s start date.
   - Users (Warehouse Workers) record all product supplies and sales, keeping stock consistent across warehouses.
   - Users can check the inventory of a specific product or view products by category.
@@ -70,7 +54,7 @@
     
 ## UI Layout
 **Login Page**  
-    - Provides ecure user authentication to access the system.  
+    - Provides secure user authentication to access the system.  
 **Home**  
     - Shows a summary of product stock across all warehouses.
 **Products**  
@@ -84,7 +68,7 @@
 
 ## UI WireFrame
 > [!IMPORTANT]
-> ![](./UIWireFrame.png)
+> ![](./UIWireFrame.jpg)
 
 ## Tech Stack
   **Languages:** Spring, Java, HTML  
@@ -97,7 +81,6 @@
   **Build:** Maven  
   
 1. **Clone:** `git clone https://github.com/NewMicRob/404-Found-CPAN-228-Group-Assignment.git`
-2. **Open the Folder** `cd 404-Found-CPAN-228-Group-Assignment/`
 2. **Open the Folder** `cd 404-Found-CPAN-228-Group-Assignment/`
 3. **Run:** Application.java
 4. **Go to:** [http://localhost:8080](http://localhost:8080)
