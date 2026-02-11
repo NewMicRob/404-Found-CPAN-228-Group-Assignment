@@ -61,7 +61,7 @@
 
 ## Home/Dashboard (Public Page)
 > [!IMPORTANT]
-> ![](./Home:DashboardWireFrame.png)
+> ![](./HomeWireFrame.png)
 
 ## Inventory (Manager and Admin)
 > [!IMPORTANT]
