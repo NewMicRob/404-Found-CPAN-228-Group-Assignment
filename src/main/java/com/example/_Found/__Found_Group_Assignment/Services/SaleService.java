@@ -23,7 +23,7 @@ public class SaleService {
 
     @Transactional
     public ProductSale createSale(ProductSale sale) {
-        inventoryService.updateStock(sale.getProductId(), sale.getQuantitySold() * -1);
+        //inventoryService.updateStock(sale.getProductId(), sale.getQuantitySold() * -1);
 
         return productSaleRepository.save(sale);
     }

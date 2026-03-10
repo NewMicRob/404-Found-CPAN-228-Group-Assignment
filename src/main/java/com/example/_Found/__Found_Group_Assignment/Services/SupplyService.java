@@ -24,7 +24,7 @@ public class SupplyService {
         ProductSupply supply = productSupplyRepository.findById(supplyId).orElseThrow(() -> new RuntimeException("No Supplies Found"));
 
         if (!"RECEIVED".equalsIgnoreCase(supply.getStatus())) {
-            inventoryService.updateStock(supply.getProductId(), supply.getQuantityReceived());
+            //inventoryService.updateStock(supply.getProductId(), supply.getQuantityReceived());
             supply.setStatus("RECEIVED");
         }
         return productSupplyRepository.save(supply);

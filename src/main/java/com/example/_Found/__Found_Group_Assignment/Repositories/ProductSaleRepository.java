@@ -15,5 +15,5 @@ public interface ProductSaleRepository extends JpaRepository<ProductSale, Long> 
     List<ProductSale> findByProductIdAndSaleDateAfter(Long productId, LocalDateTime date);
     List<ProductSale> findBySalePriceBetween(Double minPrice, Double maxPrice);
     List<ProductSale> findFirst10ByOrderBySaleDateDesc();
-    List<ProductSale> findByWarehouseId(Long warehouseId);
+    //List<ProductSale> findByWarehouse_Id(Long id);
 }

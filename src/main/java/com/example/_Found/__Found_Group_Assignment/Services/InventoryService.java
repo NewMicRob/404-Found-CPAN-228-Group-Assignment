@@ -29,7 +29,7 @@ public class InventoryService {
                 throw new RuntimeException("Stock is not in Inventory");
             }
             inventory = new Inventory();
-            inventory.setProduct(inventoryRepository.findById(productId).get());
+            //inventory.setProduct(inventoryRepository.findById(productId).get());
             inventory.setQuantity(quantityChange);
         } else {
             inventory = inventoryList.get(0);
