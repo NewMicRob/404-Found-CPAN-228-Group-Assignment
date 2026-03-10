@@ -1,7 +1,7 @@
-package com.example._Found.__Found_Group_Assignment.Controller;
+package com.example._Found.__Found_Group_Assignment.Controllers;
 
-import com.example._Found.__Found_Group_Assignment.Model.Category;
-import com.example._Found.__Found_Group_Assignment.Service.CategoryService;
+import com.example._Found.__Found_Group_Assignment.Models.Category;
+import com.example._Found.__Found_Group_Assignment.Services.CategoryService;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
