@@ -1,0 +1,45 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <title>Create Product</title>
+</head>
+<body>
+
+<h2>Create Product</h2>
+
+<form th:action="@{/products/create}" th:object="${product}" method="POST">
+
+    <!-- Product Name -->
+    <label for="name">Name:</label>
+    <input type="text" id="name" th:field="*{name}" required>
+    <div th:if="${#fields.hasErrors('name')}" th:errors="*{name}"></div>
+    <br><br>
+
+    <!-- Product Price -->
+    <label for="price">Price:</label>
+    <input type="number" id="price" step="0.01" th:field="*{price}" required>
+    <div th:if="${#fields.hasErrors('price')}" th:errors="*{price}"></div>
+    <br><br>
+
+    <!-- Product Tax rate -->
+    <label for="taxRate">Tax rate:</label>
+    <select id="taxRate" th:field="*{taxRate}" required>
+        <option th:value="13" th:text="'13%'"></option>
+        <option th:value="5" th:text="'5%'"></option>
+    </select>
+    <div th:if="${#fields.hasErrors('taxRate')}" th:errors="*{taxRate}"></div>
+    <br><br>
+
+    <!-- Product Category -->
+    <label for="category">Category:</label>
+    <select id="category" th:field="*{category}" required>
+        <option value="" disabled selected>Select a category</option>
+        <option th:each="cat : ${categories}" th:value="${cat.id}" th:text="${cat.name}"></option>
+    </select>
+    <div th:if="${#fields.hasErrors('category')}" th:errors="*{category}"></div>
+    <br><br>
+
+    <button type="submit">Create Product</button>
+</form>
+</body>
+</html>

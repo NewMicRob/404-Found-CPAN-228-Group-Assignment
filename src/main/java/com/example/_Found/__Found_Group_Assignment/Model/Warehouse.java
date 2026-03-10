@@ -16,7 +16,7 @@ public class Warehouse {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private int warehouseID_id;
+    private int id;
 
     @Size(min = 2, max = 240, message = "Name size must be > 2 and <240")
     @NotBlank(message = "The name is required")
