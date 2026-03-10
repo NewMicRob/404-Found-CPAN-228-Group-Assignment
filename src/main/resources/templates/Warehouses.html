@@ -9,9 +9,25 @@
 <div th:replace="~{Fragments/NavBar :: navbar}"></div>
 <main class="container mt-5">
 
+<h2>Warehouses List</h2>
 
+<table border="1">
+    <thead>
+    <tr>
+        <th>ID</th>
+        <th>Name</th>
+        <th>Address</th>
+    </tr>
+    </thead>
 
-
+    <tbody>
+    <tr th:each="warehouse : ${warehouses}">
+        <td th:text="${warehouse.id}"></td>
+        <td th:text="${warehouse.name}"></td>
+        <td th:text="${warehouse.address}"></td>
+    </tr>
+    </tbody>
+</table>
 
 </main>
 <div th:replace="~{Fragments/Footer :: footer}"></div>
