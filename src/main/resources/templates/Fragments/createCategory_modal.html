@@ -1,0 +1,35 @@
+<div th:fragment="createCategory_modal">
+
+    <div class="modal fade" id="createCategoryModal">
+        <div class="modal-dialog modal-dialog-centered">
+            <div class="modal-content">
+
+                <div class="modal-header">
+                    <h5>Create Category</h5>
+                </div>
+
+                <div class="modal-body">
+
+                    <form th:action="@{/products/category}" th:object="${category}" method="post">
+                        <label>Name:</label>
+                        <input type="text" th:field="*{name}" required/><br/><br/>
+
+                        <label>Parent Category:</label>
+                        <select th:field="*{parent}">
+                            <option th:value="''" th:text="'None'"></option> <!-- default if no parent -->
+                            <option th:each="category : ${categories}"
+                                    th:value="${category.id}"
+                                    th:text="${category.name}">
+                            </option>
+                        </select><br/><br/>
+
+                        <button type="submit">Save Category</button>
+                    </form>
+
+                </div>
+
+            </div>
+        </div>
+    </div>
+
+</div>
