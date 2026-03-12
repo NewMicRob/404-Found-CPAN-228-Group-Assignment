@@ -1,25 +1,22 @@
 package com.example._Found.__Found_Group_Assignment.Models;
 
+import java.time.LocalDateTime;
+
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
-
-import java.time.LocalDateTime;
+import org.springframework.cglib.core.Local;
 
 @Entity
-@Table(name = "inventory")
+@Table(name = "product_supplies")
 @Data
 @AllArgsConstructor
 @NoArgsConstructor
-public class Inventory {
-
+public class Delivery {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
-
-    @Column(nullable = false)
-    private Integer quantity;
 
     @ManyToOne
     @JoinColumn(name = "product_id")
@@ -29,11 +26,12 @@ public class Inventory {
     @JoinColumn(name = "warehouse_id")
     private Warehouse warehouse;
 
-    private LocalDateTime lastUpdated;
+    private Integer quantityReceived;
+    private Double unitCost;
 
-    @PrePersist
-    @PreUpdate
-    public void updateTimeCheck() {
-        this.lastUpdated = LocalDateTime.now();
-    }
+    @Column(nullable = false)
+    private LocalDateTime deliveryDate = LocalDateTime.now();
+
+    private String deliveredBy;
+    private String status;
 }

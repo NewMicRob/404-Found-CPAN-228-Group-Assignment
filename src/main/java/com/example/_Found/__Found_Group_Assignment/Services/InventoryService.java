@@ -18,28 +18,41 @@ public class InventoryService {
         return inventoryRepository.findAll();
     }
 
+    // Changes stock levels deliveries and shipments
     @Transactional
-    public Inventory updateStock(Long productId, Integer quantityChange) {
-        List<Inventory> inventoryList = inventoryRepository.findByProductId(productId);
+    public Inventory updateStock(int productId, int warehouseId, Integer quantityChange) {
+        // gets list of all items in inventory
+        List<Inventory> inventoryList = inventoryRepository.findByProductId((long) productId);
 
-        Inventory inventory;
+        Inventory inventoryItem = null;
 
-        if (inventoryList.isEmpty()) {
-            if (quantityChange < 0) {
-                throw new RuntimeException("Stock is not in Inventory");
+        // Goes through the items information to match warehouse
+        for (Inventory item : inventoryList) {
+            if (item.getWarehouse().getId() == warehouseId) {
+                inventoryItem = item;
+                break;
             }
-            inventory = new Inventory();
-            //inventory.setProduct(inventoryRepository.findById(productId).get());
-            inventory.setQuantity(quantityChange);
-        } else {
-            inventory = inventoryList.get(0);
-            int newTotal = inventory.getQuantity() + quantityChange;
-
-            if (newTotal < 0) {
-                throw new RuntimeException("Insufficient Stock");
-            }
-            inventory.setQuantity(newTotal);
         }
-        return inventoryRepository.save(inventory);
+
+        // If item doesnt exist
+        if (inventoryItem == null) {
+            if (quantityChange < 0) {
+                throw new RuntimeException("Item is not in stock");
+            }
+            // creates a new product
+            inventoryItem = new Inventory();
+            inventoryItem.setQuantity(quantityChange);
+
+        } else {
+            int newAmount = inventoryItem.getQuantity() + quantityChange;
+
+            // Makes it so inventory doesnt drop below 0
+            if (newAmount < 0) {
+                throw new RuntimeException("Not enough available at this warehouse");
+            }
+            inventoryItem.setQuantity(newAmount);
+        }
+        // Saves new item or updates
+        return inventoryRepository.save(inventoryItem);
     }
 }

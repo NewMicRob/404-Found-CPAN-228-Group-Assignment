@@ -17,13 +17,11 @@ INSERT INTO categories (name, parent_id) VALUES ('Shorts', 2);
 INSERT INTO categories (name, parent_id) VALUES ('Hats', 3);
 INSERT INTO categories (name, parent_id) VALUES ('Belts', 3);
 
-
 -- WAREHOUSES
 INSERT INTO warehouses (name, address) VALUES ('Main Warehouse', '123 Industrial Ave, Toronto');
 INSERT INTO warehouses (name, address) VALUES ('Downtown Storage', '45 King St W, Toronto');
 INSERT INTO warehouses (name, address) VALUES ('North Distribution Center', '890 Finch Ave W, Toronto');
-INSERT INTO warehouses (name, address) VALUES ('East Logistics Hub', '2100 Markham Rd, Scarborough');
-
+INSERT INTO warehouses (name, address) VALUES ('East Logistics Hub', '2100 Markham Rd, Scarborough')
 
 -- PRODUCTS
 -- T-Shirts (category_id = 4)
@@ -69,3 +67,17 @@ INSERT INTO products (name, price, tax_rate, category_id) VALUES ('Casual Fabric
 INSERT INTO products (name, price, tax_rate, category_id) VALUES ('Black Formal Belt', 36.99, 0.13, 10);
 INSERT INTO products (name, price, tax_rate, category_id) VALUES ('Kids Elastic Belt', 14.99, 0.05, 10);
 INSERT INTO products (name, price, tax_rate, category_id) VALUES ('Brown Leather Belt', 35.50, 0.13, 10);
+
+-- Deliveries
+INSERT INTO deliveries (product_id, warehouse_id, quantity_received, unit_cost, delivery_date, delivered_by, status) VALUES (1, 1, 100, 10.50, CURRENT_TIMESTAMP, 'Company A', 'RECEIVED');
+INSERT INTO deliveries (product_id, warehouse_id, quantity_received, unit_cost, delivery_date, delivered_by, status) VALUES (6, 3, 50, 22.00, CURRENT_TIMESTAMP, 'Company B', 'PENDING');
+
+-- Shipments
+INSERT INTO shipments (product_id, warehouse_id, quantity_shipped, shipment_value, shipment_date) VALUES (1, 1, 20, 399.80, CURRENT_TIMESTAMP);
+INSERT INTO shipments (product_id, warehouse_id, quantity_shipped, shipment_value, shipment_date) VALUES (15, 2, 5, 374.95, CURRENT_TIMESTAMP);
+
+-- Stock
+INSERT INTO inventory (product_id, warehouse_id, quantity, last_updated) VALUES (1, 1, 80, CURRENT_TIMESTAMP);
+INSERT INTO inventory (product_id, warehouse_id, quantity, last_updated) VALUES (2, 2, 75, CURRENT_TIMESTAMP);
+INSERT INTO inventory (product_id, warehouse_id, quantity, last_updated) VALUES (6, 1, 3, CURRENT_TIMESTAMP);
+INSERT INTO inventory (product_id, warehouse_id, quantity, last_updated) VALUES (9, 3, 40, CURRENT_TIMESTAMP);
