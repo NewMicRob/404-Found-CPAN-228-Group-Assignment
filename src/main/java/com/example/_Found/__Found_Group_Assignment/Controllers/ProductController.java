@@ -1,5 +1,6 @@
 package com.example._Found.__Found_Group_Assignment.Controllers;
 
+import com.example._Found.__Found_Group_Assignment.Models.Category;
 import com.example._Found.__Found_Group_Assignment.Models.Product;
 import com.example._Found.__Found_Group_Assignment.Services.CategoryService;
 import com.example._Found.__Found_Group_Assignment.Services.ProductService;
@@ -23,24 +24,40 @@ public class ProductController {
     @GetMapping
     public String showAllProducts(Model model) {
         model.addAttribute("products", productService.getAllProducts());
+        model.addAttribute("product", new Product());
+        model.addAttribute("categories", categoryService.getAllCategories());
+        model.addAttribute("parentCategories", categoryService.getParentCategories());
+        model.addAttribute("category", new Category());
         return "products";
     }
 
-    // Show the create product form
-    @GetMapping("/create")
-    public String showCreateForm(Model model) {
-        model.addAttribute("product", new Product());
-        var categories = categoryService.getAllCategories();
-        System.out.println("Categories loaded: " + categories.size());
-        categories.forEach(c -> System.out.println("  - " + c.getId() + ": " + c.getName()));
-        model.addAttribute("categories", categories);
-        return "createProduct";
-    }
+//    // Show the create product form
+//    @GetMapping("/create")
+//    public String showCreateForm(Model model) {
+//        model.addAttribute("product", new Product());
+//        var categories = categoryService.getAllCategories();
+//        System.out.println("Categories loaded: " + categories.size());
+//        categories.forEach(c -> System.out.println("  - " + c.getId() + ": " + c.getName()));
+//        model.addAttribute("categories", categories);
+//        return "createProduct";
+//    }
 
-    // Handle form submission
-    @PostMapping("/create")
+    // Handle createProduct form submission
+    @PostMapping
     public String saveProduct(@ModelAttribute Product product) {
         productService.saveProduct(product);
-        return "redirect:/products/create";
+        return "redirect:/products";
+    }
+
+    // Handle createCategory form submission
+    @PostMapping("/category")
+    public String saveCategory(@ModelAttribute Category category,
+                               @RequestParam(required = false) Integer parentId) {
+        if (parentId != null) {
+            Category parentCategory = categoryService.getCategoryById(parentId).orElse(null);
+            category.setParent(parentCategory);
+        }
+        categoryService.saveCategory(category);
+        return "redirect:/products";
     }
 }

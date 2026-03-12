@@ -41,4 +41,8 @@ public class CategoryService {
         return categoryRepository.findByParentId(parentId);
     }
 
+    public List<Category> getParentCategories(){
+        return categoryRepository.findByParentIsNull();
+    }
+
 }

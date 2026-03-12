@@ -24,15 +24,15 @@ public class CategoryController {
     }
 
     // Show the create category form
-    @GetMapping("/create")
-    public String showCreateForm(Model model) {
-        model.addAttribute("category", new Category());
-        model.addAttribute("categories", categoryService.getAllCategories()); // for parent selection
-        return "createCategory";
-    }
+//    @GetMapping("/create")
+//    public String showCreateForm(Model model) {
+//        model.addAttribute("category", new Category());
+//        model.addAttribute("categories", categoryService.getAllCategories()); // for parent selection
+//        return "createCategory";
+//    }
 
     // Handle form submission
-    @PostMapping("/create")
+    @PostMapping
     public String saveCategory(@ModelAttribute Category category,
                                @RequestParam(required = false) Integer parentId) {
         if (parentId != null) {
