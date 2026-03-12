@@ -7,11 +7,11 @@ import lombok.NoArgsConstructor;
 import java.time.LocalDateTime;
 
 @Entity
-@Table(name = "product_sales")
+@Table(name = "sales")
 @Data
 @AllArgsConstructor
 @NoArgsConstructor
-public class ProductSale {
+public class Sale {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
