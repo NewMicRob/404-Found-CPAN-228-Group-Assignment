@@ -22,9 +22,7 @@ public class CategoryService {
     }
 
     // Get a category by ID
-    public Optional<Category> getCategoryById(int id) {
-        return categoryRepository.findById(id);
-    }
+    public Category getCategoryById(Integer id) { return categoryRepository.findById(id).orElse(null); }
 
     // Save or update a category
     public Category saveCategory(Category category) {

@@ -1,18 +1,25 @@
 package com.example._Found.__Found_Group_Assignment.Models;
 
-import jakarta.persistence.*;
+import java.time.LocalDateTime;
+
+import jakarta.persistence.Column;
+import jakarta.persistence.Entity;
+import jakarta.persistence.GeneratedValue;
+import jakarta.persistence.GenerationType;
+import jakarta.persistence.Id;
+import jakarta.persistence.JoinColumn;
+import jakarta.persistence.ManyToOne;
+import jakarta.persistence.Table;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
-
-import java.time.LocalDateTime;
 
 @Entity
 @Table(name = "product_supplies")
 @Data
 @AllArgsConstructor
 @NoArgsConstructor
-public class ProductSupply {
+public class Delivery {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
@@ -27,8 +34,10 @@ public class ProductSupply {
 
     private Integer quantityReceived;
     private Double unitCost;
-    private LocalDateTime supplyDate;
 
-    private String suppliedBy;
+    @Column(nullable = false)
+    private LocalDateTime deliveryDate = LocalDateTime.now();
+
+    private String deliveredBy;
     private String status;
 }

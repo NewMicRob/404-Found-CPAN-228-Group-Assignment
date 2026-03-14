@@ -5,6 +5,8 @@ import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
+import java.time.LocalDateTime;
+
 @Entity
 @Table(name = "inventory")
 @Data
@@ -26,4 +28,12 @@ public class Inventory {
     @ManyToOne
     @JoinColumn(name = "warehouse_id")
     private Warehouse warehouse;
+
+    private LocalDateTime lastUpdated;
+
+    @PrePersist
+    @PreUpdate
+    public void updateTimeCheck() {
+        this.lastUpdated = LocalDateTime.now();
+    }
 }

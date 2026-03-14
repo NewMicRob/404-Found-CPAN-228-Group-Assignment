@@ -1,4 +1,4 @@
-package com.example._Found.__Found_Group_Assignment;
+package com.example._Found.__Found_Group_Assignment.Config;
 
 import org.h2.server.web.JakartaWebServlet;
 import org.springframework.boot.web.servlet.ServletRegistrationBean;

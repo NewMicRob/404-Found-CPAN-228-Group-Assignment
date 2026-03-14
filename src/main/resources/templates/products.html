@@ -8,7 +8,7 @@
 <body>
 <div th:replace="~{Fragments/NavBar :: navbar}"></div>
 <main class="container mt-5">
-<h2>Products List</h2>
+    <h2>Products List</h2>
 
     <!--    Button to open createProduct modal-->
     <button type="button" data-bs-toggle="modal" data-bs-target="#createProductModal">
@@ -35,37 +35,51 @@
     <div class="collapse" id="collapseExample">
         <div class="card card-body">
 
-            <div th:insert="fragments/categoriesTable :: categoriesTable"></div>
+            <div th:insert="~{fragments/categoriesTable :: categoriesTable}"></div>
 
         </div>
     </div>
 
-<table border="1">
-    <thead>
-    <tr><th>ID</th>
-
-        <th>Name</th>
-        <th>Price</th>
-        <th>Tax Rate</th>
-        <th>Category</th>
-    </tr>
-    </thead>
-    <tbody>
-    <tr th:each="product : ${products}">
-        <td th:text="${product.id}"></td>
-        <td th:text="${product.name}"></td>
-        <td th:text="${product.price}"></td>
-        <td th:text="${product.taxRate}"></td>
-        <td th:text="${product.category.name}"></td>
-    </tr>
-    </tbody>
-</table>
+    <div class="card-cont shadow-sm">
+        <div class="main-card">
+            <table class="table table-hover align-middle">
+                <thead class="table-light">
+                <tr>
+                    <th>ID</th>
+                    <th>Name</th>
+                    <th>Price</th>
+                    <th>Tax Rate</th>
+                    <th>Category</th>
+                    <th>Actions</th>
+                </tr>
+                </thead>
+                <tbody>
+                <tr th:each="product : ${products}">
+                    <td th:text="${product.id}"></td>
+                    <td th:text="${product.name}"></td>
+                    <td th:text="${product.price}"></td>
+                    <td th:text="${product.taxRate}"></td>
+                    <td th:text="${product.category.name}"></td>
+                    <td>
+                        <!-- Delete icon -->
+                        <a th:href="@{/products/delete/{id}(id=${product.id})}"
+                           title="Delete" class="text-danger me-2 text-decoration-none">❌</a>
+<!--                         Edit icon-->
+                        <a th:href="@{/products/update/{id}(id=${product.id})}"
+                           title="Edit" class="text-warning text-decoration-none">✏️</a>
+                         Edit
+                    </td>
+                </tr>
+                </tbody>
+            </table>
+        </div>
+    </div>
 
     <!-- Include modal createProduct -->
-    <div th:replace="Fragments/createProduct_modal :: createProduct_modal"></div>
+    <div th:replace="~{Fragments/createProduct_modal :: createProduct_modal}"></div>
 
     <!-- Include modal createCategory -->
-    <div th:replace="Fragments/createCategory_modal :: createCategory_modal"></div>
+    <div th:replace="~{Fragments/createCategory_modal :: createCategory_modal}"></div>
 
 </main>
 <div th:replace="~{Fragments/Footer :: footer}"></div>

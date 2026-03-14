@@ -8,6 +8,8 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.Optional;
+
 @Controller
 @RequestMapping("/products")
 public class ProductController {
@@ -31,17 +33,6 @@ public class ProductController {
         return "products";
     }
 
-//    // Show the create product form
-//    @GetMapping("/create")
-//    public String showCreateForm(Model model) {
-//        model.addAttribute("product", new Product());
-//        var categories = categoryService.getAllCategories();
-//        System.out.println("Categories loaded: " + categories.size());
-//        categories.forEach(c -> System.out.println("  - " + c.getId() + ": " + c.getName()));
-//        model.addAttribute("categories", categories);
-//        return "createProduct";
-//    }
-
     // Handle createProduct form submission
     @PostMapping
     public String saveProduct(@ModelAttribute Product product) {
@@ -53,11 +44,27 @@ public class ProductController {
     @PostMapping("/category")
     public String saveCategory(@ModelAttribute Category category,
                                @RequestParam(required = false) Integer parentId) {
+        // If parent category is selected
         if (parentId != null) {
-            Category parentCategory = categoryService.getCategoryById(parentId).orElse(null);
-            category.setParent(parentCategory);
+            Category parent = categoryService.getCategoryById(parentId);
+            category.setParent(parent);
+        } else {
+            category.setParent(null); // No parent selected
         }
         categoryService.saveCategory(category);
+        return "redirect:/products";
+    }
+
+    // Handle product deletion (mark as deleted)
+    @GetMapping("/delete/{id}")
+    public String deleteProduct(@PathVariable("id") int id) {
+        Optional<Product> optionalProduct = productService.getProductById(id); // Optional<Product>
+
+        if (optionalProduct.isPresent()) {
+            Product product = optionalProduct.get();
+            product.setDeleted(true);            // mark as deleted
+            productService.saveProduct(product);
+        }
         return "redirect:/products";
     }
 }

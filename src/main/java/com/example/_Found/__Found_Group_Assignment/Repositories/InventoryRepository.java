@@ -8,9 +8,9 @@ import java.util.List;
 
 @Repository
 public interface InventoryRepository extends JpaRepository<Inventory, Long> {
-    List<Inventory> findByProductId(Long productId);
+    List<Inventory> findByProductId(Integer productId);
 
     List<Inventory> findByQuantityLessThan(Integer threshold);
 
-    List<Inventory> findByWarehouseId(Long warehouseId);
+    List<Inventory> findByWarehouseId(Integer warehouseId);
 }
