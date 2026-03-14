@@ -1,19 +1,99 @@
 <!DOCTYPE html>
 <html xmlns:th="http://www.thymeleaf.org">
 <head>
-    <meta charset="UTF-8">
-    <title>StockFlow - Inventory</title>
-    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+<meta charset="UTF-8">
+<title>StockFlow - Inventory</title>
+<link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+<link rel="stylesheet" th:href="@{/style.css}">
 </head>
 <body>
-<div th:replace="~{Fragments/NavBar :: navbar}"></div>
+<div th:replace="~{Fragments/navBar :: navbar}"></div>
 <main class="container mt-5">
 
+<div class="d-flex justify-content-between align-items-center mb-4">
+<h2>
+    Inventory
+</h2>
+
+<form method="get" action="/inventory" class="d-flex">
+    <input type="text" name="search" class="form-control me-2" 
+        placeholder="Search for a product" th:value="${param.search}">
+    <button type="submit" class="btn btn-primary">Search</button>
+    <a href="/inventory" class="btn btn-secondary">Clear</a>
+</form>
+
+<span class="badge bg-primary px-3 py-2">
+    Total Items:
+    <span th:text="${inventoryList.size()}">
+        0
+    </span>
+</span>
+</div>
+
+<div th:if="${errMessage}" class="alert alert-danger alert-dismissible fade show" role="alert">
+<strong>
+    Failed to update:
+</strong>
+<span th:text="${errMessage}"></span>
+<button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+</div>
+
+<div class="card-cont shadow-sm">
+<div class="main-card">
+    <table class="table table-hover align-middle">
+        <thead class="table-light">
+            <tr>
+                <th>ID</th>
+                <th>Products</th>
+                <th>Quantity</th>
+                <th>Warehouse</th>
+                <th class="text-center">Adjust</th>
+            </tr>
+        </thead>
+        <tbody>
+        <tr th:each="item : ${inventoryList}">
+            <td th:text="${item.product.id}">1</td>
+            <td>
+                <strong th:text="${item.product.name}">Product</strong>
+            </td>
+            <td>
+                <span th:classappend="${item.quantity < 10} ? 'text-danger fw-bold' : ''" th:text="${item.quantity}">
+                    0
+                </span>
+            </td>
+            <td th:text="${item.warehouse.name}">Warehouse</td>
+            <td>
+                <form th:action="@{/inventory/update}" method="post" class="row g-2 justify-content-center">
+                    <input type="hidden" name="productId" th:value="${item.product.id}" />
+                    <input type="hidden" name="warehouseId" th:value="${item.warehouse.id}" />
+                    <div class="col-auto">
+                        <input type="number" name="amount" class="form-control form-control-sm" placeholder="Qty" required style="width: 100px;">
+                    </div>
+                    <div class="col-auto">
+                        <button type="submit" class="btn btn-outline-primary btn-sm">Update</button>
+                    </div>
+                </form>
+            </td>
+        </tr>
+        </tbody>
+    </table>
+</div>
+</div>
 
 
+
+<div class="mt-3">
+<button type="button" class="btn btn-success" data-bs-toggle="modal" data-bs-target="#updateInventoryModal">
+    Update Stock
+</button>
+</div>
 
 </main>
-<div th:replace="~{Fragments/Footer :: footer}"></div>
+
+<div th:replace="Fragments/updateInventory_modal :: updateInventory_modal"></div>
+
+
+<div th:replace="~{Fragments/footer :: footer}"></div>
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
 </body>
 </html>

@@ -1,4 +1,50 @@
 package com.example._Found.__Found_Group_Assignment.Services;
 
+import com.example._Found.__Found_Group_Assignment.Models.Product;
+import com.example._Found.__Found_Group_Assignment.Repositories.ProductRepository;
+import org.springframework.stereotype.Service;
+import java.util.List;
+import java.util.Optional;
+
+@Service
 public class ProductService {
+
+    private final ProductRepository productRepository;
+
+    public ProductService(ProductRepository productRepository) {
+        this.productRepository = productRepository;
+    }
+
+    // Get all products
+    public List<Product> getAllProducts() { return productRepository.findByDeletedFalse();
+    }
+
+    // Get a product by ID
+    public Optional<Product> getProductById(Integer id) {
+        return productRepository.findById(id);
+    }
+
+    // Save or update a product
+    public Product saveProduct(Product product) {
+        return productRepository.save(product);
+    }
+
+    // Get products by category by ID
+    public List<Product> getProductsByCategory(Integer categoryId) {
+        return productRepository.findByCategoryId(categoryId);
+    }
+
+    public Product updateProduct(int id, Product updatedProduct) {
+        return productRepository.findById(id)
+                .map(product -> {
+                    product.setName(updatedProduct.getName());
+                    product.setPrice(updatedProduct.getPrice());
+                    product.setTaxRate(updatedProduct.getTaxRate());
+                    product.setCategory(updatedProduct.getCategory());
+                    // keep deleted flag as is, or set if you want
+                    product.setDeleted(updatedProduct.isDeleted());
+                    return productRepository.save(product);
+                })
+                .orElseThrow(() -> new RuntimeException("Product not found with id: " + id));
+    }
 }

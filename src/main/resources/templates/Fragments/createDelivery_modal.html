@@ -1,0 +1,50 @@
+<div th:fragment="createDelivery_modal" class="modal fade" id="createDeliveryModal" tabindex="-1">
+    <div class="modal-dialog modal-dialog-centered">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title">Create a Delivery</h5>
+                <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
+            </div>
+            <div class="modal-body">
+                <form th:action="@{/deliveries/addDelivery}" method="post">
+                    <div class="mb-3">
+                        <label class="form-label">Product:</label>
+                        <select name="product.id" class="form-select" required>
+                            <option th:each="product : ${productList}" 
+                                    th:value="${product.id}" 
+                                    th:text="${product.name}">
+                            </option>
+                        </select>
+                    </div>
+                    
+                    <div class="mb-3">
+                        <label class="form-label">Warehouse:</label>
+                        <select name="warehouse.id" class="form-select" required>
+                            <option th:each="warehouse : ${warehouseList}" 
+                                    th:value="${warehouse.id}" 
+                                    th:text="${warehouse.name}">
+                            </option>
+                        </select>
+                    </div>
+                    
+                    <div class="mb-3">
+                        <label class="form-label">Quantity Received:</label>
+                        <input type="number" name="quantityReceived" class="form-control" required>
+                    </div>
+                    
+                    <div class="mb-3">
+                        <label class="form-label">Unit Cost:</label>
+                        <input type="number" step="0.01" name="unitCost" class="form-control" required>
+                    </div>
+                    
+                    <div class="mb-3">
+                        <label class="form-label">Delivered By:</label>
+                        <input type="text" name="deliveredBy" class="form-control" required>
+                    </div>
+                    
+                    <button type="submit" class="btn btn-primary">Add Delivery</button>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>
