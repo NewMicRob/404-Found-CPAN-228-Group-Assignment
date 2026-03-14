@@ -10,14 +10,16 @@
                     <form th:action="@{/products}" th:object="${product}" method="POST">
                         <div class="mb-3">
                             <label for="name" class="form-label">Name:</label>
-                            <input type="text" id="name" th:field="*{name}" class="form-control" required>
-                            <div th:if="${#fields.hasErrors('name')}" th:errors="*{name}" class="text-danger"></div>
+                            <input type="text" id="name" th:field="*{name}" class="form-control" required minlength="2" maxlength="240">
+                            <div th:if="${#fields.hasErrors('name')}" th:errors="*{name}" class="text-danger">
+                            </div>
                         </div>
 
                         <div class="mb-3">
                             <label for="price" class="form-label">Price:</label>
-                            <input type="number" id="price" step="0.01" th:field="*{price}" class="form-control" required>
-                            <div th:if="${#fields.hasErrors('price')}" th:errors="*{price}" class="text-danger"></div>
+                            <input type="number" id="price" th:field="*{price}" class="form-control" step="0.01" min="0.01" required>
+                            <div th:if="${#fields.hasErrors('price')}" th:errors="*{price}" class="text-danger">
+                            </div>
                         </div>
 
                         <div class="mb-3">

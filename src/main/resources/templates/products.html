@@ -64,10 +64,9 @@
                         <!-- Delete icon -->
                         <a th:href="@{/products/delete/{id}(id=${product.id})}"
                            title="Delete" class="text-danger me-2 text-decoration-none">❌</a>
-<!--                         Edit icon-->
+                        <!--Update icon-->
                         <a th:href="@{/products/update/{id}(id=${product.id})}"
-                           title="Edit" class="text-warning text-decoration-none">✏️</a>
-                         Edit
+                           title="Update" class="text-warning text-decoration-none">✏️</a>
                     </td>
                 </tr>
                 </tbody>
@@ -80,6 +79,9 @@
 
     <!-- Include modal createCategory -->
     <div th:replace="~{Fragments/createCategory_modal :: createCategory_modal}"></div>
+
+    <!-- Include modal updateProduct -->
+    <div th:replace="~{Fragments/updateProduct_modal :: updateProduct_modal}"></div>
 
 </main>
 <div th:replace="~{Fragments/Footer :: footer}"></div>

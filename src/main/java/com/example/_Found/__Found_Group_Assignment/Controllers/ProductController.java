@@ -4,8 +4,10 @@ import com.example._Found.__Found_Group_Assignment.Models.Category;
 import com.example._Found.__Found_Group_Assignment.Models.Product;
 import com.example._Found.__Found_Group_Assignment.Services.CategoryService;
 import com.example._Found.__Found_Group_Assignment.Services.ProductService;
+import jakarta.validation.Valid;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
+import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.Optional;
@@ -35,7 +37,16 @@ public class ProductController {
 
     // Handle createProduct form submission
     @PostMapping
-    public String saveProduct(@ModelAttribute Product product) {
+    public String saveProduct(
+            @Valid @ModelAttribute("product") Product product,
+            BindingResult bindingResult,
+            Model model) {
+
+        // Check for validation errors
+        if (bindingResult.hasErrors()) {
+              model.addAttribute("categories", categoryService.getParentCategories());
+              return "fragments/createProduct_modal :: createProduct_modal";
+        }
         productService.saveProduct(product);
         return "redirect:/products";
     }
@@ -67,4 +78,30 @@ public class ProductController {
         }
         return "redirect:/products";
     }
+
+    @GetMapping("/update/{id}")
+    public String showUpdateProduct(@PathVariable int id, Model model) {
+        Product product = productService.getProductById(id).orElseThrow(() -> new RuntimeException("Product not found"));
+        model.addAttribute("product", product);
+        model.addAttribute("parentCategories", categoryService.getParentCategories());
+        return "Fragments/updateProduct_modal :: updateProduct_modal";
+    }
+
+    @PostMapping("/update/{id}")
+    public String updateProduct(@PathVariable int id,
+                                @Valid @ModelAttribute("product") Product product,
+                                BindingResult bindingResult,
+                                Model model) {
+
+        if (bindingResult.hasErrors()) {
+            model.addAttribute("parentCategories", categoryService.getParentCategories());
+            return "Fragments/updateProduct_modal :: updateProduct_modal";
+        }
+
+        product.setId(id);
+        productService.saveProduct(product);
+
+        return "redirect:/products";
+    }
+
 }
