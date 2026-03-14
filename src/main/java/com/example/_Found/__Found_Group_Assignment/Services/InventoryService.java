@@ -22,7 +22,7 @@ public class InventoryService {
     @Transactional
     public Inventory updateStock(int productId, int warehouseId, Integer quantityChange) {
         // gets list of all items in inventory
-        List<Inventory> inventoryList = inventoryRepository.findByProductId((long) productId);
+        List<Inventory> inventoryList = inventoryRepository.findByProductId( productId);
 
         Inventory inventoryItem = null;
 

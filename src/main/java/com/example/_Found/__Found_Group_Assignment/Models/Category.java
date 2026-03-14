@@ -1,12 +1,20 @@
 package com.example._Found.__Found_Group_Assignment.Models;
-import jakarta.persistence.*;
+import java.util.List;
+
+import jakarta.persistence.CascadeType;
+import jakarta.persistence.Entity;
+import jakarta.persistence.GeneratedValue;
+import jakarta.persistence.GenerationType;
+import jakarta.persistence.Id;
+import jakarta.persistence.JoinColumn;
+import jakarta.persistence.ManyToOne;
+import jakarta.persistence.OneToMany;
+import jakarta.persistence.Table;
 import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.Size;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
-
-import java.util.List;
 
 @Entity
 @Table(name = "categories")
@@ -30,4 +38,17 @@ public class Category {
 
     @OneToMany(mappedBy = "parent", cascade = CascadeType.ALL)
     private List<Category> children;
+
+    @OneToMany(mappedBy = "category", cascade = CascadeType.ALL)
+    private List<Product> items;
+
+    public int getTotalItems() {
+        int count = (items != null) ? items.size() : 0;
+        if (children != null) {
+            for (Category child : children) {
+                count += child.getTotalItems();
+            }
+        }
+        return count;
+    }
 }

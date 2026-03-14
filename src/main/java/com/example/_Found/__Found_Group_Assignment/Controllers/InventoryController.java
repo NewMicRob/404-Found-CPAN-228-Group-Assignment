@@ -1,7 +1,8 @@
 package com.example._Found.__Found_Group_Assignment.Controllers;
 
-import com.example._Found.__Found_Group_Assignment.Models.Inventory;
-import com.example._Found.__Found_Group_Assignment.Services.InventoryService;
+import java.util.ArrayList;
+import java.util.List;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -10,8 +11,10 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 
-import java.util.ArrayList;
-import java.util.List;
+import com.example._Found.__Found_Group_Assignment.Models.Inventory;
+import com.example._Found.__Found_Group_Assignment.Services.InventoryService;
+import com.example._Found.__Found_Group_Assignment.Services.ProductService;
+import com.example._Found.__Found_Group_Assignment.Services.WarehouseService;
 
 @Controller
 @RequestMapping ("/inventory")
@@ -19,6 +22,13 @@ public class InventoryController {
 
     @Autowired
     private InventoryService inventoryService;
+
+    @Autowired
+    private ProductService productService;
+
+    @Autowired
+    private WarehouseService warehouseService;
+
 
     @GetMapping
     public String viewInventory(
@@ -43,7 +53,11 @@ public class InventoryController {
             // Loads all
             model.addAttribute("inventoryList", allList);
         }
-        return "Inventory";
+
+        model.addAttribute("productList", productService.getAllProducts());
+        model.addAttribute("warehouseList", warehouseService.getAllWarehouses());
+    
+        return "inventory";
     }
 
     @PostMapping("/update")
@@ -60,8 +74,10 @@ public class InventoryController {
         } catch (RuntimeException e) {
             model.addAttribute("errMessage", e.getMessage());
             model.addAttribute("inventoryList", inventoryService.getAllInventory());
+            model.addAttribute("productList", productService.getAllProducts());
+            model.addAttribute("warehouseList", warehouseService.getAllWarehouses());
 
-            return "Inventory";
+            return "inventory";
         }
     }
 }

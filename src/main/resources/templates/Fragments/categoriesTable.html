@@ -1,23 +1,19 @@
 <div th:fragment="categoriesTable">
-    <table border="1">
-        <thead>
-        <tr>
-            <th>Category</th>
-            <th>Subcategories</th>
-        </tr>
+    <table class="table table-bordered">
+        <thead class="table-light">
+            <tr>
+                <th>Parent Category</th>
+                <th>Subcategories</th>
+            </tr>
         </thead>
 
         <tbody>
-        <tr th:each="category : ${parentCategories}">
-            <td style="vertical-align: top;" th:text="${category.name}"></td>
-
-            <td>
-                <div th:each="child : ${category.children}"
-                     th:text="${child.name}">
-                </div>
-            </td>
-
-        </tr>
+            <tr th:each="category : ${categories}">
+                <td style="vertical-align: top;" th:text="${category.name}"></td>
+                <td>
+                    <div th:each="child : ${category.children}" th:text="${child.name}"></div>
+                </td>
+            </tr>
         </tbody>
     </table>
 </div>

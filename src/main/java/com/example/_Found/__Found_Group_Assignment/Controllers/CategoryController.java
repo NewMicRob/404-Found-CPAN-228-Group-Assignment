@@ -1,10 +1,15 @@
 package com.example._Found.__Found_Group_Assignment.Controllers;
 
-import com.example._Found.__Found_Group_Assignment.Models.Category;
-import com.example._Found.__Found_Group_Assignment.Services.CategoryService;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
-import org.springframework.web.bind.annotation.*;
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.ModelAttribute;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
+
+import com.example._Found.__Found_Group_Assignment.Models.Category;
+import com.example._Found.__Found_Group_Assignment.Services.CategoryService;
 
 @Controller
 @RequestMapping("/categories")
@@ -20,6 +25,7 @@ public class CategoryController {
     @GetMapping
     public String showAllCategories(Model model) {
         model.addAttribute("categories", categoryService.getAllCategories());
+        model.addAttribute("category", new Category());
         return "categories";
     }
 
@@ -40,6 +46,6 @@ public class CategoryController {
             category.setParent(parentCategory);
         }
         categoryService.saveCategory(category);
-        return "redirect:/categories/create";
+        return "redirect:/categories";
     }
 }
