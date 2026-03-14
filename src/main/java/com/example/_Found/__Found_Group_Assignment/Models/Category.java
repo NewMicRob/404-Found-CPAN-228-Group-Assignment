@@ -1,6 +1,7 @@
 package com.example._Found.__Found_Group_Assignment.Models;
 import java.util.List;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import jakarta.persistence.CascadeType;
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
@@ -32,22 +33,23 @@ public class Category {
 
     // Self-referencing parent category
     @ManyToOne
-    @JoinColumn(name = "parent_id") // FK to the same table
+    @JoinColumn(name = "parent_id") // FK to the same
+    @JsonIgnore
     private Category parent;
 
     @OneToMany(mappedBy = "parent", cascade = CascadeType.ALL)
     private List<Category> children;
 
-    @OneToMany(mappedBy = "category", cascade = CascadeType.ALL)
-    private List<Product> items;
+//    @OneToMany(mappedBy = "category", cascade = CascadeType.ALL)
+//    private List<Product> items;
 
-    public int getTotalItems() {
-        int count = (items != null) ? items.size() : 0;
-        if (children != null) {
-            for (Category child : children) {
-                count += child.getTotalItems();
-            }
-        }
-        return count;
-    }
+//    public int getTotalItems() {
+//        int count = (items != null) ? items.size() : 0;
+//        if (children != null) {
+//            for (Category child : children) {
+//                count += child.getTotalItems();
+//            }
+//        }
+//        return count;
+//    }
 }

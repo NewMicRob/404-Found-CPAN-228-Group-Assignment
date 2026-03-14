@@ -1,46 +1,40 @@
-<!DOCTYPE html>
-<html lang="en" xmlns:th="http://www.thymeleaf.org">
-
-<body>
 <div th:fragment="updateProduct_modal">
-    <div class="modal fade" id="updateProductModal" tabindex="-1">
+    <div class="modal fade" id="updateProduct_modal" tabindex="-1">
         <div class="modal-dialog modal-dialog-centered">
             <div class="modal-content">
 
                 <div class="modal-header">
                     <h5 class="modal-title">Update Product</h5>
-                    <a href="/products" class="btn-close"></a>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
                 </div>
 
                 <div class="modal-body">
 
-                    <form th:action="@{/products/update/{id}(id=${product.id})}"
-                          th:object="${product}"
-                          method="POST">
+                    <form action="/products/update" method="POST" >
+
+                        <input type="hidden" id="update-id" name="id"/>
 
                         <div class="mb-3">
                             <label class="form-label">Name:</label>
-                            <input type="text" th:field="*{name}" class="form-control" required>
-                            <div th:if="${#fields.hasErrors('name')}" th:errors="*{name}" class="text-danger"></div>
+                            <input type="text" id="update-name" name="name" class="form-control" required>
                         </div>
 
                         <div class="mb-3">
                             <label class="form-label">Price:</label>
-                            <input type="number" step="0.01" th:field="*{price}" class="form-control" required>
-                            <div th:if="${#fields.hasErrors('price')}" th:errors="*{price}" class="text-danger"></div>
+                            <input type="number" id="update-price" name="price" class="form-control" step="0.01" required>
                         </div>
 
                         <div class="mb-3">
                             <label class="form-label">Tax Rate:</label>
-                            <select th:field="*{taxRate}" class="form-select">
-                                <option th:value="13">13%</option>
-                                <option th:value="5">5%</option>
+                            <select id="update-taxRate" name="taxRate" class="form-select">
+                                <option value="13">13%</option>
+                                <option value="5">5%</option>
                             </select>
                         </div>
 
                         <div class="mb-3">
                             <label class="form-label">Category:</label>
-                            <select th:field="*{category.id}" class="form-select">
+                            <select id="update-category" name="category.id" class="form-select">
                                 <option th:each="cat : ${parentCategories}"
                                         th:value="${cat.id}"
                                         th:text="${cat.name}">
@@ -48,11 +42,7 @@
                             </select>
                         </div>
 
-                        <input type="hidden" th:field="*{deleted}"/>
-
-                        <button type="submit" class="btn btn-primary">
-                            Update Product
-                        </button>
+                        <button type="submit" class="btn btn-primary">Update Product</button>
 
                     </form>
 
@@ -61,5 +51,3 @@
         </div>
     </div>
 </div>
-</body>
-</html>

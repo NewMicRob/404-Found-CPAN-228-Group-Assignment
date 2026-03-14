@@ -29,11 +29,6 @@ public class ProductService {
         return productRepository.save(product);
     }
 
-    // Delete a product by ID
-    public void deleteProductById(Integer id) {
-        productRepository.deleteById(id);
-    }
-
     // Get products by category by ID
     public List<Product> getProductsByCategory(Integer categoryId) {
         return productRepository.findByCategoryId(categoryId);

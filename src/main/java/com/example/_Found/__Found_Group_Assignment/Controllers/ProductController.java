@@ -35,6 +35,14 @@ public class ProductController {
         return "products";
     }
 
+    @GetMapping("/get/{id}")
+    @ResponseBody
+    public Product getProduct(@PathVariable int id) {
+        Product p = productService.getProductById(id)
+                .orElseThrow(() -> new RuntimeException("Product not found"));
+        return p;
+    }
+
     // Handle createProduct form submission
     @PostMapping
     public String saveProduct(
@@ -79,26 +87,23 @@ public class ProductController {
         return "redirect:/products";
     }
 
-    @GetMapping("/update/{id}")
-    public String showUpdateProduct(@PathVariable int id, Model model) {
-        Product product = productService.getProductById(id).orElseThrow(() -> new RuntimeException("Product not found"));
-        model.addAttribute("product", product);
-        model.addAttribute("parentCategories", categoryService.getParentCategories());
-        return "Fragments/updateProduct_modal :: updateProduct_modal";
-    }
+//    @GetMapping("/update/{id}")
+//    public String showUpdateProduct(@PathVariable int id, Model model) {
+//        Product product = productService.getProductById(id).orElseThrow(() -> new RuntimeException("Product not found"));
+//        model.addAttribute("product", product);
+//        model.addAttribute("parentCategories", categoryService.getParentCategories());
+//        return "Fragments/updateProduct_modal :: updateProduct_modal";
+//    }
 
-    @PostMapping("/update/{id}")
-    public String updateProduct(@PathVariable int id,
-                                @Valid @ModelAttribute("product") Product product,
+    @PostMapping("/update")
+    public String updateProduct(@Valid @ModelAttribute("product") Product product,
                                 BindingResult bindingResult,
                                 Model model) {
-
         if (bindingResult.hasErrors()) {
             model.addAttribute("parentCategories", categoryService.getParentCategories());
-            return "Fragments/updateProduct_modal :: updateProduct_modal";
+            return "redirect:/products";
         }
 
-        product.setId(id);
         productService.saveProduct(product);
 
         return "redirect:/products";
