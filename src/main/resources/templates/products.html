@@ -62,21 +62,19 @@
                     <td th:text="${product.taxRate}"></td>
                     <td th:text="${product.category.name}"></td>
                     <td>
-                        <!-- Delete icon -->
-                        <a th:href="@{/products/delete/{id}(id=${product.id})}"
-                           title="Delete" class="text-danger me-2 text-decoration-none">❌</a>
                         <!--Update icon-->
-<!--                        <a th:href="@{/products/update/{id}(id=${product.id})}"-->
-<!--                           title="Update" class="text-warning text-decoration-none">✏️</a>-->
-
                         <button type="button"
                                 class="btn btn-sm btn-warning"
+                                style="background-color: transparent; border: none; margin-right: 40px"
                                 data-bs-toggle="modal"
                                 data-bs-target="#updateProduct_modal"
                                 th:attr="data-id=${product.id}"
                                 onclick="openUpdateModal(this)">
                             ✏️
                         </button>
+                        <!-- Delete icon -->
+                        <a th:href="@{/products/delete/{id}(id=${product.id})}"
+                           title="Delete" class="text-danger me-2 text-decoration-none">❌</a>
                     </td>
                 </tr>
                 </tbody>
@@ -108,7 +106,7 @@
                 document.getElementById('update-id').value = product.id;
                 document.getElementById('update-name').value = product.name;
                 document.getElementById('update-price').value = product.price;
-                document.getElementById('update-taxRate').value = product.taxRate;
+                document.getElementById('update-taxRate').value = String(product.taxRate);
                 document.getElementById('update-category').value = product.category.id;
 
                 // Show the modal
