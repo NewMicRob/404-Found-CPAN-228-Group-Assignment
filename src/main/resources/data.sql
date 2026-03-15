@@ -25,48 +25,48 @@ INSERT INTO warehouses (name, address) VALUES ('East Logistics Hub', '2100 Markh
 
 -- PRODUCTS
 -- T-Shirts (category_id = 4)
-INSERT INTO products (name, price, tax_rate, category_id) VALUES ('Basic Cotton T-Shirt', 19.99, 0.13, 4);
-INSERT INTO products (name, price, tax_rate, category_id) VALUES ('Graphic Print T-Shirt', 24.99, 0.13, 4);
-INSERT INTO products (name, price, tax_rate, category_id) VALUES ('Slim Fit T-Shirt', 22.50, 0.13, 4);
-INSERT INTO products (name, price, tax_rate, category_id) VALUES ('Kids Cartoon T-Shirt', 14.99, 0.05, 4);
-INSERT INTO products (name, price, tax_rate, category_id) VALUES ('Kids Sports T-Shirt', 15.99, 0.05, 4);
+INSERT INTO products (name, price, tax_rate, category_id, deleted) VALUES ('Basic Cotton T-Shirt', 19.99, 0.13, 4, false);
+INSERT INTO products (name, price, tax_rate, category_id, deleted) VALUES ('Graphic Print T-Shirt', 24.99, 0.13, 4, false);
+INSERT INTO products (name, price, tax_rate, category_id, deleted) VALUES ('Slim Fit T-Shirt', 22.50, 0.13, 4, false);
+INSERT INTO products (name, price, tax_rate, category_id, deleted) VALUES ('Kids Cartoon T-Shirt', 14.99, 0.05, 4, false);
+INSERT INTO products (name, price, tax_rate, category_id, deleted) VALUES ('Kids Sports T-Shirt', 15.99, 0.05, 4, false);
 
 -- Shirts (category_id = 5)
-INSERT INTO products (name, price, tax_rate, category_id) VALUES ('Formal White Shirt', 39.99, 0.13, 5);
-INSERT INTO products (name, price, tax_rate, category_id) VALUES ('Casual Linen Shirt', 44.99, 0.13, 5);
-INSERT INTO products (name, price, tax_rate, category_id) VALUES ('Slim Fit Office Shirt', 42.50, 0.13, 5);
-INSERT INTO products (name, price, tax_rate, category_id) VALUES ('Kids Checkered Shirt', 19.99, 0.05, 5);
+INSERT INTO products (name, price, tax_rate, category_id, deleted) VALUES ('Formal White Shirt', 39.99, 0.13, 5, false);
+INSERT INTO products (name, price, tax_rate, category_id, deleted) VALUES ('Casual Linen Shirt', 44.99, 0.13, 5, false);
+INSERT INTO products (name, price, tax_rate, category_id, deleted) VALUES ('Slim Fit Office Shirt', 42.50, 0.13, 5, false);
+INSERT INTO products (name, price, tax_rate, category_id, deleted) VALUES ('Kids Checkered Shirt', 19.99, 0.05, 5, false);
 
 -- Hoodies (category_id = 6)
-INSERT INTO products (name, price, tax_rate, category_id) VALUES ('Classic Pullover Hoodie', 49.99, 0.13, 6);
-INSERT INTO products (name, price, tax_rate, category_id) VALUES ('Zip-Up Hoodie', 54.99, 0.13, 6);
-INSERT INTO products (name, price, tax_rate, category_id) VALUES ('Sport Training Hoodie', 59.99, 0.13, 6);
-INSERT INTO products (name, price, tax_rate, category_id) VALUES ('Kids Warm Hoodie', 29.99, 0.05, 6);
+INSERT INTO products (name, price, tax_rate, category_id, deleted) VALUES ('Classic Pullover Hoodie', 49.99, 0.13, 6, false);
+INSERT INTO products (name, price, tax_rate, category_id, deleted) VALUES ('Zip-Up Hoodie', 54.99, 0.13, 6, false);
+INSERT INTO products (name, price, tax_rate, category_id, deleted) VALUES ('Sport Training Hoodie', 59.99, 0.13, 6, false);
+INSERT INTO products (name, price, tax_rate, category_id, deleted) VALUES ('Kids Warm Hoodie', 29.99, 0.05, 6, false);
 
 -- Jeans (category_id = 7)
-INSERT INTO products (name, price, tax_rate, category_id) VALUES ('Regular Fit Jeans', 69.99, 0.13, 7);
-INSERT INTO products (name, price, tax_rate, category_id) VALUES ('Slim Fit Blue Jeans', 74.99, 0.13, 7);
-INSERT INTO products (name, price, tax_rate, category_id) VALUES ('Black Denim Jeans', 72.50, 0.13, 7);
-INSERT INTO products (name, price, tax_rate, category_id) VALUES ('Kids Stretch Jeans', 34.99, 0.05, 7);
+INSERT INTO products (name, price, tax_rate, category_id, deleted) VALUES ('Regular Fit Jeans', 69.99, 0.13, 7, false);
+INSERT INTO products (name, price, tax_rate, category_id, deleted) VALUES ('Slim Fit Blue Jeans', 74.99, 0.13, 7, false);
+INSERT INTO products (name, price, tax_rate, category_id, deleted) VALUES ('Black Denim Jeans', 72.50, 0.13, 7, false);
+INSERT INTO products (name, price, tax_rate, category_id, deleted) VALUES ('Kids Stretch Jeans', 34.99, 0.05, 7, false);
 
 -- Shorts (category_id = 8)
-INSERT INTO products (name, price, tax_rate, category_id) VALUES ('Summer Cotton Shorts', 29.99, 0.13, 8);
-INSERT INTO products (name, price, tax_rate, category_id) VALUES ('Sport Running Shorts', 27.99, 0.13, 8);
-INSERT INTO products (name, price, tax_rate, category_id) VALUES ('Denim Shorts', 32.50, 0.13, 8);
-INSERT INTO products (name, price, tax_rate, category_id) VALUES ('Kids Playground Shorts', 18.99, 0.05, 8);
+INSERT INTO products (name, price, tax_rate, category_id, deleted) VALUES ('Summer Cotton Shorts', 29.99, 0.13, 8, false);
+INSERT INTO products (name, price, tax_rate, category_id, deleted) VALUES ('Sport Running Shorts', 27.99, 0.13, 8, false);
+INSERT INTO products (name, price, tax_rate, category_id, deleted) VALUES ('Denim Shorts', 32.50, 0.13, 8, false);
+INSERT INTO products (name, price, tax_rate, category_id, deleted) VALUES ('Kids Playground Shorts', 18.99, 0.05, 8, false);
 
 -- Hats (category_id = 9)
-INSERT INTO products (name, price, tax_rate, category_id) VALUES ('Baseball Cap', 16.99, 0.13, 9);
-INSERT INTO products (name, price, tax_rate, category_id) VALUES ('Winter Beanie', 19.99, 0.13, 9);
-INSERT INTO products (name, price, tax_rate, category_id) VALUES ('Snapback Hat', 21.99, 0.13, 9);
-INSERT INTO products (name, price, tax_rate, category_id) VALUES ('Kids Sun Hat', 12.99, 0.05, 9);
+INSERT INTO products (name, price, tax_rate, category_id, deleted) VALUES ('Baseball Cap', 16.99, 0.13, 9, false);
+INSERT INTO products (name, price, tax_rate, category_id, deleted) VALUES ('Winter Beanie', 19.99, 0.13, 9, false);
+INSERT INTO products (name, price, tax_rate, category_id, deleted) VALUES ('Snapback Hat', 21.99, 0.13, 9, false);
+INSERT INTO products (name, price, tax_rate, category_id, deleted) VALUES ('Kids Sun Hat', 12.99, 0.05, 9, false);
 
 -- Belts (category_id = 10)
-INSERT INTO products (name, price, tax_rate, category_id) VALUES ('Classic Leather Belt', 34.99, 0.13, 10);
-INSERT INTO products (name, price, tax_rate, category_id) VALUES ('Casual Fabric Belt', 24.99, 0.13, 10);
-INSERT INTO products (name, price, tax_rate, category_id) VALUES ('Black Formal Belt', 36.99, 0.13, 10);
-INSERT INTO products (name, price, tax_rate, category_id) VALUES ('Kids Elastic Belt', 14.99, 0.05, 10);
-INSERT INTO products (name, price, tax_rate, category_id) VALUES ('Brown Leather Belt', 35.50, 0.13, 10);
+INSERT INTO products (name, price, tax_rate, category_id, deleted) VALUES ('Classic Leather Belt', 34.99, 0.13, 10, false);
+INSERT INTO products (name, price, tax_rate, category_id, deleted) VALUES ('Casual Fabric Belt', 24.99, 0.13, 10, false);
+INSERT INTO products (name, price, tax_rate, category_id, deleted) VALUES ('Black Formal Belt', 36.99, 0.13, 10, false);
+INSERT INTO products (name, price, tax_rate, category_id, deleted) VALUES ('Kids Elastic Belt', 14.99, 0.05, 10, false);
+INSERT INTO products (name, price, tax_rate, category_id, deleted) VALUES ('Brown Leather Belt', 35.50, 0.13, 10, false);
 
 -- Deliveries
 INSERT INTO product_supplies (product_id, warehouse_id, quantity_received, unit_cost, delivery_date, delivered_by, status) VALUES (1, 1, 100, 10.50, CURRENT_TIMESTAMP, 'Company A', 'RECEIVED');

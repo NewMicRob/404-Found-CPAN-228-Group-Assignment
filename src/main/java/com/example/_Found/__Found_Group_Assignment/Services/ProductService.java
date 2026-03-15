@@ -16,8 +16,7 @@ public class ProductService {
     }
 
     // Get all products
-    public List<Product> getAllProducts() {
-        return productRepository.findAll();
+    public List<Product> getAllProducts() { return productRepository.findByDeletedFalse();
     }
 
     // Get a product by ID
@@ -30,13 +29,22 @@ public class ProductService {
         return productRepository.save(product);
     }
 
-    // Delete a product by ID
-    public void deleteProduct(Integer id) {
-        productRepository.deleteById(id);
-    }
-
     // Get products by category by ID
     public List<Product> getProductsByCategory(Integer categoryId) {
         return productRepository.findByCategoryId(categoryId);
+    }
+
+    public Product updateProduct(int id, Product updatedProduct) {
+        return productRepository.findById(id)
+                .map(product -> {
+                    product.setName(updatedProduct.getName());
+                    product.setPrice(updatedProduct.getPrice());
+                    product.setTaxRate(updatedProduct.getTaxRate());
+                    product.setCategory(updatedProduct.getCategory());
+                    // keep deleted flag as is, or set if you want
+                    product.setDeleted(updatedProduct.isDeleted());
+                    return productRepository.save(product);
+                })
+                .orElseThrow(() -> new RuntimeException("Product not found with id: " + id));
     }
 }

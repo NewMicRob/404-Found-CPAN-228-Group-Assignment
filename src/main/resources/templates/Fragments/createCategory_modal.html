@@ -17,7 +17,7 @@
                             <label class="form-label">Parent Category:</label>
                             <select name="parentId" class="form-select">
                                 <option value="">None</option>
-                                <option th:each="cat : ${categories}" 
+                                <option th:each="cat : ${parentCategories}"
                                         th:value="${cat.id}" 
                                         th:text="${cat.name}">
                                 </option>

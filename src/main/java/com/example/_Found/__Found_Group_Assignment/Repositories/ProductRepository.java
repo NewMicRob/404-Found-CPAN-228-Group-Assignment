@@ -10,4 +10,5 @@ public interface ProductRepository extends JpaRepository<Product, Integer> {
     // Find all products in a specific category
     List<Product> findByCategoryId(Integer categoryId);
 
+    List<Product> findByDeletedFalse();
 }

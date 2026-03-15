@@ -1,20 +1,16 @@
 package com.example._Found.__Found_Group_Assignment.Controllers;
 
-import java.util.ArrayList;
-import java.util.List;
-
-import org.springframework.stereotype.Controller;
-import org.springframework.ui.Model;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.ModelAttribute;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestParam;
-
 import com.example._Found.__Found_Group_Assignment.Models.Category;
 import com.example._Found.__Found_Group_Assignment.Models.Product;
 import com.example._Found.__Found_Group_Assignment.Services.CategoryService;
 import com.example._Found.__Found_Group_Assignment.Services.ProductService;
+import jakarta.validation.Valid;
+import org.springframework.stereotype.Controller;
+import org.springframework.ui.Model;
+import org.springframework.validation.BindingResult;
+import org.springframework.web.bind.annotation.*;
+
+import java.util.Optional;
 
 @Controller
 @RequestMapping("/products")
@@ -28,26 +24,10 @@ public class ProductController {
         this.categoryService = categoryService;
     }
 
-    // Show all the products *Updated for search
+    // Show all the products
     @GetMapping
-    public String showAllProducts(
-        @RequestParam(required = false) String search,
-        Model model) {
-        
-        List<Product> allProducts = productService.getAllProducts();
-
-        if (search != null && !search.isEmpty()) {
-            List<Product> filteredProducts = new ArrayList<>();
-            for (Product product : allProducts) {
-                if (product.getName().toLowerCase().contains(search.toLowerCase())) {
-                    filteredProducts.add(product);
-                }
-            }
-            model.addAttribute("products", filteredProducts);
-        } else {
-            model.addAttribute("products", allProducts);
-        }
-
+    public String showAllProducts(Model model) {
+        model.addAttribute("products", productService.getAllProducts());
         model.addAttribute("product", new Product());
         model.addAttribute("categories", categoryService.getAllCategories());
         model.addAttribute("parentCategories", categoryService.getParentCategories());
@@ -55,9 +35,26 @@ public class ProductController {
         return "products";
     }
 
+    @GetMapping("/get/{id}")
+    @ResponseBody
+    public Product getProduct(@PathVariable int id) {
+        Product p = productService.getProductById(id)
+                .orElseThrow(() -> new RuntimeException("Product not found"));
+        return p;
+    }
+
     // Handle createProduct form submission
     @PostMapping
-    public String saveProduct(@ModelAttribute Product product) {
+    public String saveProduct(
+            @Valid @ModelAttribute("product") Product product,
+            BindingResult bindingResult,
+            Model model) {
+
+        // Check for validation errors
+        if (bindingResult.hasErrors()) {
+              model.addAttribute("categories", categoryService.getParentCategories());
+              return "fragments/createProduct_modal :: createProduct_modal";
+        }
         productService.saveProduct(product);
         return "redirect:/products";
     }
@@ -66,11 +63,50 @@ public class ProductController {
     @PostMapping("/category")
     public String saveCategory(@ModelAttribute Category category,
                                @RequestParam(required = false) Integer parentId) {
+        // If parent category is selected
         if (parentId != null) {
-            Category parentCategory = categoryService.getCategoryById(parentId).orElse(null);
-            category.setParent(parentCategory);
+            Category parent = categoryService.getCategoryById(parentId);
+            category.setParent(parent);
+        } else {
+            category.setParent(null); // No parent selected
         }
         categoryService.saveCategory(category);
-        return "redirect:/categories";
+        return "redirect:/products";
     }
+
+    // Handle product deletion (mark as deleted)
+    @GetMapping("/delete/{id}")
+    public String deleteProduct(@PathVariable("id") int id) {
+        Optional<Product> optionalProduct = productService.getProductById(id); // Optional<Product>
+
+        if (optionalProduct.isPresent()) {
+            Product product = optionalProduct.get();
+            product.setDeleted(true);            // mark as deleted
+            productService.saveProduct(product);
+        }
+        return "redirect:/products";
+    }
+
+//    @GetMapping("/update/{id}")
+//    public String showUpdateProduct(@PathVariable int id, Model model) {
+//        Product product = productService.getProductById(id).orElseThrow(() -> new RuntimeException("Product not found"));
+//        model.addAttribute("product", product);
+//        model.addAttribute("parentCategories", categoryService.getParentCategories());
+//        return "Fragments/updateProduct_modal :: updateProduct_modal";
+//    }
+
+    @PostMapping("/update")
+    public String updateProduct(@Valid @ModelAttribute("product") Product product,
+                                BindingResult bindingResult,
+                                Model model) {
+        if (bindingResult.hasErrors()) {
+            model.addAttribute("parentCategories", categoryService.getParentCategories());
+            return "redirect:/products";
+        }
+
+        productService.saveProduct(product);
+
+        return "redirect:/products";
+    }
+
 }

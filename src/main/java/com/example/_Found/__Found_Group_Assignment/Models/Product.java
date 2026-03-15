@@ -1,5 +1,6 @@
 package com.example._Found.__Found_Group_Assignment.Models;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import jakarta.persistence.*;
 import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.NotNull;
@@ -19,7 +20,7 @@ public class Product {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private int id;
 
-    @Size(min = 2, max = 240, message = "Name size must be > 2 and <240")
+    @Size(min = 2, max = 240, message = "Name size must be > 2 and <30")
     @NotBlank(message = "The name is required")
     private String name;
 
@@ -30,6 +31,9 @@ public class Product {
 
     @ManyToOne
     @JoinColumn(name = "category_id")
+    @JsonIgnore
     private Category category;
 
+    @Column(nullable = false)
+    private boolean deleted = false;
 }
