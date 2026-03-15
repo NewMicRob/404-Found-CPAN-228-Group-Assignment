@@ -1,12 +1,15 @@
 package com.example._Found.__Found_Group_Assignment.Services;
 
-import com.example._Found.__Found_Group_Assignment.Models.Inventory;
-import com.example._Found.__Found_Group_Assignment.Repositories.InventoryRepository;
+import java.util.List;
+
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
-import java.util.List;
+import com.example._Found.__Found_Group_Assignment.Models.Inventory;
+import com.example._Found.__Found_Group_Assignment.Repositories.InventoryRepository;
 
 @Service
 public class InventoryService {
@@ -14,8 +17,12 @@ public class InventoryService {
     @Autowired
     private InventoryRepository inventoryRepository;
 
-    public List<Inventory> getAllInventory() {
-        return inventoryRepository.findAll();
+    public Page<Inventory> getAllInventory(Pageable pageable) {
+        return inventoryRepository.findAll(pageable);
+    }
+
+    public Page<Inventory> findByProductName(String search, Pageable pageable) {
+        return inventoryRepository.findByProductNameContainingIgnoreCase(search, pageable);
     }
 
     // Changes stock levels deliveries and shipments

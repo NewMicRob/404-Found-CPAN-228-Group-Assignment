@@ -1,99 +1,154 @@
 <!DOCTYPE html>
 <html xmlns:th="http://www.thymeleaf.org">
 <head>
-<meta charset="UTF-8">
-<title>StockFlow - Inventory</title>
-<link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
-<link rel="stylesheet" th:href="@{/style.css}">
+    <meta charset="UTF-8">
+    <title>StockFlow - Inventory</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link rel="stylesheet" th:href="@{/style.css}">
 </head>
 <body>
-<div th:replace="~{Fragments/navBar :: navbar}"></div>
-<main class="container mt-5">
+    <div th:replace="~{Fragments/navBar :: navbar}"></div>
+    
+    <main class="container mt-5">
+        <div class="d-flex justify-content-between align-items-center mb-4">
+            <h2>Inventory</h2>
 
-<div class="d-flex justify-content-between align-items-center mb-4">
-<h2>
-    Inventory
-</h2>
+            <form method="get" action="/inventory" class="d-flex">
+                <input type="text" name="search" class="form-control me-2" placeholder="Search for a product" th:value="${search}">
+                <button type="submit" class="btn btn-primary">Search</button>
+                <a href="/inventory" class="btn btn-secondary">Clear</a>
+            </form>
 
-<form method="get" action="/inventory" class="d-flex">
-    <input type="text" name="search" class="form-control me-2" 
-        placeholder="Search for a product" th:value="${param.search}">
-    <button type="submit" class="btn btn-primary">Search</button>
-    <a href="/inventory" class="btn btn-secondary">Clear</a>
-</form>
+            <span class="badge bg-primary px-3 py-2">
+                Total Items:
+                <span th:text="${totalItems}">0</span>
+            </span>
+        </div>
 
-<span class="badge bg-primary px-3 py-2">
-    Total Items:
-    <span th:text="${inventoryList.size()}">
-        0
-    </span>
-</span>
-</div>
+        <div th:if="${errMessage}" class="alert alert-danger alert-dismissible fade show" role="alert">
+            <strong>Failed to update:</strong>
+            <span th:text="${errMessage}"></span>
+            <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+        </div>
 
-<div th:if="${errMessage}" class="alert alert-danger alert-dismissible fade show" role="alert">
-<strong>
-    Failed to update:
-</strong>
-<span th:text="${errMessage}"></span>
-<button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
-</div>
+        <div class="card-cont shadow-sm">
+            <div class="main-card">
+                <table class="table table-hover align-middle">
+                    <thead class="table-light">
+                        <tr>
+                            <th>
+                                <a th:href="@{/inventory(search=${search}, sort='id', direction=${sort == 'id' and direction == 'ASC' ? 'DESC' : 'ASC'}, page=${currentPage}, size=${size})}" class="text-decoration-none text-dark">
+                                    ID 
+                                    <span th:if="${sort == 'id'}">
+                                        <span th:text="${direction == 'ASC' ? '▲' : '▼'}"></span>
+                                    </span>
+                                </a>
+                            </th>
+                            <th>
+                                <a th:href="@{/inventory(search=${search}, sort='product.name', direction=${sort == 'product.name' and direction == 'ASC' ? 'DESC' : 'ASC'}, page=${currentPage}, size=${size})}" class="text-decoration-none text-dark">
+                                    Products 
+                                    <span th:if="${sort == 'product.name'}">
+                                        <span th:text="${direction == 'ASC' ? '▲' : '▼'}"></span>
+                                    </span>
+                                </a>
+                            </th>
+                            <th>
+                                <a th:href="@{/inventory(search=${search}, sort='quantity', direction=${sort == 'quantity' and direction == 'ASC' ? 'DESC' : 'ASC'}, page=${currentPage}, size=${size})}" class="text-decoration-none text-dark">
+                                    Quantity 
+                                    <span th:if="${sort == 'quantity'}">
+                                        <span th:text="${direction == 'ASC' ? '▲' : '▼'}"></span>
+                                    </span>
+                                </a>
+                            </th>
+                            <th>
+                                <a th:href="@{/inventory(search=${search}, sort='warehouse.name', direction=${sort == 'warehouse.name' and direction == 'ASC' ? 'DESC' : 'ASC'}, page=${currentPage}, size=${size})}" class="text-decoration-none text-dark">
+                                    Warehouse 
+                                    <span th:if="${sort == 'warehouse.name'}">
+                                        <span th:text="${direction == 'ASC' ? '▲' : '▼'}"></span>
+                                    </span>
+                                </a>
+                            </th>
+                            <th class="text-center">Adjust</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr th:each="item : ${inventoryList}">
+                            <td th:text="${item.product.id}">1</td>
+                            <td>
+                                <strong th:text="${item.product.name}">Product</strong>
+                            </td>
+                            <td>
+                                <span th:classappend="${item.quantity < 10} ? 'text-danger fw-bold' : ''" th:text="${item.quantity}">0</span>
+                            </td>
+                            <td th:text="${item.warehouse.name}">Warehouse</td>
+                            <td>
+                                <form th:action="@{/inventory/update}" method="post" class="row g-2 justify-content-center">
+                                    <input type="hidden" name="productId" th:value="${item.product.id}" />
+                                    <input type="hidden" name="warehouseId" th:value="${item.warehouse.id}" />
+                                    <div class="col-auto">
+                                        <input type="number" name="amount" class="form-control form-control-sm" placeholder="Qty" required style="width: 100px;">
+                                    </div>
+                                    <div class="col-auto">
+                                        <button type="submit" class="btn btn-outline-primary btn-sm">Update</button>
+                                    </div>
+                                </form>
+                            </td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+        </div>
 
-<div class="card-cont shadow-sm">
-<div class="main-card">
-    <table class="table table-hover align-middle">
-        <thead class="table-light">
-            <tr>
-                <th>ID</th>
-                <th>Products</th>
-                <th>Quantity</th>
-                <th>Warehouse</th>
-                <th class="text-center">Adjust</th>
-            </tr>
-        </thead>
-        <tbody>
-        <tr th:each="item : ${inventoryList}">
-            <td th:text="${item.product.id}">1</td>
-            <td>
-                <strong th:text="${item.product.name}">Product</strong>
-            </td>
-            <td>
-                <span th:classappend="${item.quantity < 10} ? 'text-danger fw-bold' : ''" th:text="${item.quantity}">
-                    0
+        <div style="padding: 15px 20px; border-top: 1px solid #e0e0e0; display: flex; justify-content: space-between; align-items: center; font-size: 14px; color: #666;">
+            <span id="showing-info">
+                Showing <span th:text="${startIndex}">1</span> to <span th:text="${endIndex}">10</span> of <span th:text="${totalItems}">100</span> entries
+            </span>
+
+            <div style="display: flex; gap: 5px; align-items: center;">
+                <a th:if="${currentPage > 0}" th:href="@{/inventory(search=${search}, page=0, size=${size}, sort=${sort}, direction=${direction})}" style="padding: 6px 10px; border: 1px solid #ddd; background: white; border-radius: 4px; font-size: 12px; text-decoration: none; color: #333; cursor: pointer;">
+                    « First
+                </a>
+                <span th:if="${currentPage == 0}" style="padding: 6px 10px; border: 1px solid #ddd; background: #f5f5f5; border-radius: 4px; font-size: 12px; color: #999;">
+                    « First
                 </span>
-            </td>
-            <td th:text="${item.warehouse.name}">Warehouse</td>
-            <td>
-                <form th:action="@{/inventory/update}" method="post" class="row g-2 justify-content-center">
-                    <input type="hidden" name="productId" th:value="${item.product.id}" />
-                    <input type="hidden" name="warehouseId" th:value="${item.warehouse.id}" />
-                    <div class="col-auto">
-                        <input type="number" name="amount" class="form-control form-control-sm" placeholder="Qty" required style="width: 100px;">
-                    </div>
-                    <div class="col-auto">
-                        <button type="submit" class="btn btn-outline-primary btn-sm">Update</button>
-                    </div>
-                </form>
-            </td>
-        </tr>
-        </tbody>
-    </table>
-</div>
-</div>
 
+                <a th:if="${hasPrevious}" th:href="@{/inventory(search=${search}, page=${currentPage - 1}, size=${size}, sort=${sort}, direction=${direction})}" style="padding: 6px 10px; border: 1px solid #ddd; background: white; border-radius: 4px; font-size: 12px; text-decoration: none; color: #333; cursor: pointer;">
+                    ‹ Prev
+                </a>
+                <span th:if="${!hasPrevious}" style="padding: 6px 10px; border: 1px solid #ddd; background: #f5f5f5; border-radius: 4px; font-size: 12px; color: #999;">
+                    ‹ Prev
+                </span>
 
+                <span style="padding: 6px 10px; font-size: 12px;">
+                    Page <span th:text="${currentPage + 1}">1</span> of <span th:text="${totalPages}">5</span>
+                </span>
 
-<div class="mt-3">
-<button type="button" class="btn btn-success" data-bs-toggle="modal" data-bs-target="#updateInventoryModal">
-    Update Stock
-</button>
-</div>
+                <a th:if="${hasNext}" th:href="@{/inventory(search=${search}, page=${currentPage + 1}, size=${size}, sort=${sort}, direction=${direction})}" style="padding: 6px 10px; border: 1px solid #ddd; background: white; border-radius: 4px; font-size: 12px; text-decoration: none; color: #333; cursor: pointer;">
+                    Next ›
+                </a>
+                <span th:if="${!hasNext}" style="padding: 6px 10px; border: 1px solid #ddd; background: #f5f5f5; border-radius: 4px; font-size: 12px; color: #999;">
+                    Next ›
+                </span>
 
-</main>
+                <a th:if="${currentPage < totalPages - 1}" th:href="@{/inventory(search=${search}, page=${totalPages - 1}, size=${size}, sort=${sort}, direction=${direction})}" style="padding: 6px 10px; border: 1px solid #ddd; background: white; border-radius: 4px; font-size: 12px; text-decoration: none; color: #333; cursor: pointer;">
+                    Last »
+                </a>
+                <span th:if="${currentPage >= totalPages - 1}" style="padding: 6px 10px; border: 1px solid #ddd; background: #f5f5f5; border-radius: 4px; font-size: 12px; color: #999;">
+                    Last »
+                </span>
+            </div>
+        </div>
 
-<div th:replace="Fragments/updateInventory_modal :: updateInventory_modal"></div>
+        <div class="mt-3">
+            <button type="button" class="btn btn-success" data-bs-toggle="modal" data-bs-target="#updateInventoryModal">
+                Update Stock
+            </button>
+        </div>
+    </main>
 
+    <div th:replace="Fragments/updateInventory_modal :: updateInventory_modal"></div>
+    <div th:replace="~{Fragments/footer :: footer}"></div>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
 
-<div th:replace="~{Fragments/footer :: footer}"></div>
-<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
 </body>
 </html>
