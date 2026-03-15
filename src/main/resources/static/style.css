@@ -16,3 +16,38 @@ main {
 footer {
     flex-shrink: 0;
 }
+
+.filter-form {
+    background: #f8f9fa;
+    padding: 15px 20px;
+    border-radius: 6px;
+    border: 1px solid #ddd;
+    max-width: 900px;
+    margin-bottom: 25px;
+}
+
+.filter-row {
+    display: flex;
+    align-items: center;
+    gap: 20px;
+    flex-wrap: wrap;
+    margin-bottom: 15px;
+}
+
+.filter-form label {
+    font-weight: 600;
+    margin-right: 5px;
+}
+
+.filter-form select,
+.filter-form input[type="text"] {
+    padding: 6px 10px;
+    border: 1px solid #ccc;
+    border-radius: 4px;
+    min-width: 150px;
+}
+
+.filter-form button {
+    padding: 6px 14px;
+    border-radius: 4px;
+}
