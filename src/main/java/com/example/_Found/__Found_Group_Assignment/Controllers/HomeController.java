@@ -1,22 +1,39 @@
 package com.example._Found.__Found_Group_Assignment.Controllers;
 
-import com.example._Found.__Found_Group_Assignment.Models.Inventory;
-import com.example._Found.__Found_Group_Assignment.Repositories.InventoryRepository;
+import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
+import java.util.stream.Collectors;
+
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 
-import java.util.*;
-import java.util.stream.Collectors;
+import com.example._Found.__Found_Group_Assignment.Models.Category;
+import com.example._Found.__Found_Group_Assignment.Models.Inventory;
+import com.example._Found.__Found_Group_Assignment.Models.Product;
+import com.example._Found.__Found_Group_Assignment.Models.Warehouse;
+import com.example._Found.__Found_Group_Assignment.Repositories.InventoryRepository;
+import com.example._Found.__Found_Group_Assignment.Services.CategoryService;
+import com.example._Found.__Found_Group_Assignment.Services.ProductService;
+import com.example._Found.__Found_Group_Assignment.Services.WarehouseService;
 
 @Controller
 public class HomeController {
 
     private final InventoryRepository inventoryRepository;
+    private final ProductService productService;
+    private final CategoryService categoryService;
+    private final WarehouseService warehouseService;
 
     // Inject the repository via constructor
-    public HomeController(InventoryRepository inventoryRepository) {
+    // Added the services for the quickref add/create section of the homepage
+    public HomeController(InventoryRepository inventoryRepository, ProductService productService, CategoryService categoryService, WarehouseService warehouseService) {
         this.inventoryRepository = inventoryRepository;
+        this.productService = productService;
+        this.categoryService = categoryService;
+        this.warehouseService = warehouseService;
     }
 
     @GetMapping("/")
@@ -40,6 +57,16 @@ public class HomeController {
 
         model.addAttribute("labels", labels);
         model.addAttribute("quantities", quantities);
+
+        // Added attributes for the quickref add/create section of the homepage
+        model.addAttribute("product", new Product());
+        model.addAttribute("category", new Category());
+        model.addAttribute("warehouse", new Warehouse());
+        model.addAttribute("categories", categoryService.getAllCategories());
+        model.addAttribute("warehouses", warehouseService.getAllWarehouses());
+        model.addAttribute("warehouseList", warehouseService.getAllWarehouses());
+        model.addAttribute("parentCategories", categoryService.getParentCategories());
+        model.addAttribute("productList", productService.getAllProducts());
 
         return "home"; // Thymeleaf template: home.html
     }

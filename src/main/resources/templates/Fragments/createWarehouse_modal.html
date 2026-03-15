@@ -6,7 +6,8 @@
                 <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
             </div>
             <div class="modal-body">
-                <form th:action="@{/warehouses}" th:object="${warehouse}" method="POST">
+                <!-- I changed the form action to use your create post mapping for use on the homepage as well as the warehouse page -->
+                <form th:action="@{/warehouses/create}" th:object="${warehouse}" method="POST">
                     <div class="mb-3">
                         <label for="name" class="form-label">Name:</label>
                         <input type="text" id="name" th:field="*{name}" class="form-control" required>

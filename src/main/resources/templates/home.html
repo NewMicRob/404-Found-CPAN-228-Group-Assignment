@@ -5,6 +5,11 @@
     <title>StockFlow - Home</title>
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
     <link rel="stylesheet" th:href="@{/style.css}">
+
+    <!-- Added for charts and for action Cards -->
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.10.0/font/bootstrap-icons.css">
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+
 </head>
 <body>
 <div th:replace="~{Fragments/navBar :: navbar}"></div>
@@ -16,8 +21,170 @@
         <img id="home-placeholder" th:src="@{/images/home-placeholder.png}" class="img-fluid rounded shadow-sm">
     </div>
 
+
+    <div class="mt-5">
+        <h2>Welcome to StockFlow!</h2>
+        <p>WELCOME MESSAGE</p>
+
+
+        <p>Click on a link in the dashboard to instantly add your selection to the page and be redirected there after.</p>
+
+        <!-- Dashboard -->
+        <div class="row mb-5">
+            <div class="col-12">
+                <h4 class="mb-3">Quick Actions</h4>
+                <div class="row g-3">
+                    <!-- Product-->
+                    <div class="col-md-4 col-lg-2">
+                        <div class="card text-center h-100 shadow-sm hover-card">
+                            <div class="card-body d-flex flex-column align-items-center justify-content-center">
+                                <i class="bi bi-box-seam fs-1 text-primary mb-2"></i>
+                                <button class="btn btn-outline-primary btn-sm" 
+                                        data-bs-toggle="modal" 
+                                        data-bs-target="#createProductModal">
+                                    Add Product
+                                </button>
+                            </div>
+                        </div>
+                    </div>
+                    <!-- Category -->
+                    <div class="col-md-4 col-lg-2">
+                        <div class="card text-center h-100 shadow-sm hover-card">
+                            <div class="card-body d-flex flex-column align-items-center justify-content-center">
+                                <i class="bi bi-tags fs-1 text-success mb-2"></i>
+                                <button class="btn btn-outline-success btn-sm" 
+                                        data-bs-toggle="modal" 
+                                        data-bs-target="#createCategoryModal">
+                                    Add Category
+                                </button>
+                            </div>
+                        </div>
+                    </div>
+                    <!-- Warehouse -->
+                    <div class="col-md-4 col-lg-2">
+                        <div class="card text-center h-100 shadow-sm hover-card">
+                            <div class="card-body d-flex flex-column align-items-center justify-content-center">
+                                <i class="bi bi-building fs-1 text-warning mb-2"></i>
+                                <button class="btn btn-outline-warning btn-sm" 
+                                        data-bs-toggle="modal" 
+                                        data-bs-target="#createWarehouseModal">
+                                    Add Warehouse
+                                </button>
+                            </div>
+                        </div>
+                    </div>
+                    <!-- Shipment -->
+                    <div class="col-md-4 col-lg-3">
+                        <div class="card text-center h-100 shadow-sm hover-card">
+                            <div class="card-body d-flex flex-column align-items-center justify-content-center">
+                                <i class="bi bi-truck fs-1 text-info mb-2"></i>
+                                <button class="btn btn-outline-info btn-sm" 
+                                        data-bs-toggle="modal" 
+                                        data-bs-target="#createShipmentModal">
+                                    Add Shipment
+                                </button>
+                            </div>
+                        </div>
+                    </div>
+                    <!-- Delivery -->
+                    <div class="col-md-4 col-lg-3">
+                        <div class="card text-center h-100 shadow-sm hover-card">
+                            <div class="card-body d-flex flex-column align-items-center justify-content-center">
+                                <i class="bi bi-send-check fs-1 text-danger mb-2"></i>
+                                <button class="btn btn-outline-danger btn-sm" 
+                                        data-bs-toggle="modal" 
+                                        data-bs-target="#createDeliveryModal">
+                                    Add Delivery
+                                </button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Chart Section -->
+        <div class="row mt-5">
+            <div class="col-md-10 offset-md-1">
+                <div class="card shadow-sm">
+                    <div class="card-body">
+                        <h5 class="card-title">Total Products by Product Type</h5>
+                        <canvas id="inventoryChart"></canvas>
+                    </div>
+                </div>
+            </div>
+        </div>
+
 </main>
+<div th:replace="~{Fragments/createProduct_modal :: createProduct_modal}"></div>
+<div th:replace="~{Fragments/createCategory_modal :: createCategory_modal}"></div>
+<div th:replace="~{Fragments/createWarehouse_modal :: createWarehouse_modal}"></div>
+<div th:replace="~{Fragments/createShipment_modal :: createShipment_modal}"></div>
+<div th:replace="~{Fragments/createDelivery_modal :: createDelivery_modal}"></div>
 <div th:replace="~{Fragments/footer :: footer}"></div>
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+
+<!-- Charts / uses the info from the controller-->
+<script th:inline="javascript">
+    const labels = /*[[${labels}]]*/ [];
+    const quantities = /*[[${quantities}]]*/ [];
+    
+    const ctx = document.getElementById('inventoryChart');
+    new Chart(ctx, {
+        type: 'bar',
+        data: {
+            labels: labels,
+            datasets: [{
+                label: 'Total Quantity',
+                data: quantities,
+                backgroundColor: 'rgba(54, 162, 235, 0.6)',
+                borderColor: 'rgba(54, 162, 235, 1)',
+                borderWidth: 2
+            }]
+        },
+        options: {
+            responsive: true,
+            scales: {
+                y: {
+                    beginAtZero: true,
+                    ticks: {
+                        stepSize: 1
+                    }
+                }
+            }
+        }
+    });
+</script>
+
+<!-- Clickable cards / Buttons on cards open modals clicking anywhere else on the card takes them to the page -->
+<script>
+    document.addEventListener('DOMContentLoaded', function() {
+        const cards = document.querySelectorAll('.hover-card');
+        const pageMap = {
+            'createProductModal': '/products',
+            'createCategoryModal': '/products',
+            'createWarehouseModal': '/warehouses',
+            'createShipmentModal': '/shipments',
+            'createDeliveryModal': '/deliveries'
+        };
+        
+        cards.forEach(card => {
+            card.addEventListener('click', function(e) {
+                if (e.target.tagName === 'BUTTON' || e.target.closest('button')) {
+                    return;
+                }
+                
+                const button = this.querySelector('button');
+                const modalTarget = button.getAttribute('data-bs-target').substring(1);
+                const page = pageMap[modalTarget];
+                
+                if (page) {
+                    window.location.href = page;
+                }
+            });
+        });
+    });
+</script>
+
 </body>
 </html>
