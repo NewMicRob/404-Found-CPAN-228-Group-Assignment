@@ -14,14 +14,7 @@
 <body>
 <div th:replace="~{Fragments/navBar :: navbar}"></div>
 <main class="container mt-5">
-
-<h1>Home Page</h1>
-
-    <div class="text-center mt-4">
-        <img id="home-placeholder" th:src="@{/images/home-placeholder.png}" class="img-fluid rounded shadow-sm">
-    </div>
-
-
+    
     <div class="mt-5">
         <h2>Welcome to StockFlow!</h2>
         <p>WELCOME MESSAGE</p>
@@ -104,12 +97,39 @@
         </div>
 
         <!-- Chart Section -->
-        <div class="row mt-5">
-            <div class="col-md-10 offset-md-1">
-                <div class="card shadow-sm">
-                    <div class="card-body">
-                        <h5 class="card-title">Total Products by Product Type</h5>
-                        <canvas id="inventoryChart"></canvas>
+        <div>
+            <h3>Inventory Report</h3>
+
+            <!-- Chart Section -->
+            <!-- Products -->
+            <div class="row mt-5">
+                <div class="col-md-10 offset-md-1">
+                    <div class="card shadow-sm">
+                        <div class="card-body">
+                            <h5 class="card-title">Products by Type</h5>
+                            <canvas id="inventoryChart"></canvas>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Warehouses -->
+            <div class="row mt-5">
+                <div class="col-md-6 mb-4">
+                    <div class="card shadow-sm">
+                        <div class="card-body">
+                            <h5 class="card-title">Warehouse Distribution</h5>
+                            <canvas id="warehouseChart"></canvas>
+                        </div>
+                    </div>
+                </div>
+                <!-- Categories -->
+                <div class="col-md-6 mb-4">
+                    <div class="card shadow-sm">
+                        <div class="card-body">
+                            <h5 class="card-title">Categories Breakdown (Subcategories Only)</h5>
+                            <canvas id="categoryChart"></canvas>
+                        </div>
                     </div>
                 </div>
             </div>
@@ -126,6 +146,7 @@
 
 <!-- Charts / uses the info from the controller-->
 <script th:inline="javascript">
+    // Products
     const labels = /*[[${labels}]]*/ [];
     const quantities = /*[[${quantities}]]*/ [];
     
@@ -150,6 +171,64 @@
                     ticks: {
                         stepSize: 1
                     }
+                }
+            }
+        }
+    });
+
+    // Warehouses
+    const warehouseLabels = /*[[${warehouseLabels}]]*/ [];
+    const warehouseQuantities = /*[[${warehouseQuantities}]]*/ [];
+    
+    const ctx2 = document.getElementById('warehouseChart');
+    new Chart(ctx2, {
+        type: 'bar',
+        data: {
+            labels: warehouseLabels,
+            datasets: [{
+                label: 'Total Quantity',
+                data: warehouseQuantities,
+                backgroundColor: 'rgba(255, 159, 64, 0.6)',
+                borderColor: 'rgba(255, 159, 64, 1)',
+                borderWidth: 2
+            }]
+        },
+        options: {
+            responsive: true,
+            maintainAspectRatio: true,
+            scales: {
+                y: {
+                    beginAtZero: true,
+                    ticks: { stepSize: 1 }
+                }
+            }
+        }
+    });
+
+    // Categories
+    const categoryLabels = /*[[${categoryLabels}]]*/ [];
+    const categoryQuantities = /*[[${categoryQuantities}]]*/ [];
+    
+    const ctx3 = document.getElementById('categoryChart');
+    new Chart(ctx3, {
+        type: 'bar',
+        data: {
+            labels: categoryLabels,
+            datasets: [{
+                label: 'Total Quantity',
+                data: categoryQuantities,
+                backgroundColor: 'rgba(75, 192, 192, 0.6)',
+                borderColor: 'rgba(75, 192, 192, 1)',
+                borderWidth: 2
+            }]
+        },
+        options: {
+            responsive: true,
+            maintainAspectRatio: true,
+            scales: {
+                y: {
+                    beginAtZero: true,
+                    ticks: { stepSize: 1 }
                 }
             }
         }

@@ -55,8 +55,45 @@ public class HomeController {
                 .map(totals::get)
                 .collect(Collectors.toList());
 
+        // Warehouse
+        Map<String, Integer> warehouseTotals = new HashMap<>();
+        for (Inventory i : inventoryList) {
+            String warehouseName = i.getWarehouse().getName();
+            warehouseTotals.put(warehouseName, warehouseTotals.getOrDefault(warehouseName, 0) + i.getQuantity()
+            );
+        }
+        List<String> warehouseLabels = new ArrayList<>(warehouseTotals.keySet());
+        List<Integer> warehouseQuantities = warehouseLabels.stream().map(warehouseTotals::get).collect(Collectors.toList());
+
+        // Category
+        Map<String, Integer> categoryTotals = new HashMap<>();
+        List<Category> allCategories = categoryService.getAllCategories();
+        for (Category cat : allCategories) {
+            if (cat.getParent() != null) {
+                categoryTotals.put(cat.getName(), 0);
+            }
+        }
+
+        for (Inventory i : inventoryList) {
+            Category category = i.getProduct().getCategory();
+            if (category != null && category.getParent() != null) {
+                String categoryName = category.getName();
+                categoryTotals.put(categoryName, 
+                    categoryTotals.getOrDefault(categoryName, 0) + i.getQuantity());
+            }
+        }
+
+        List<String> categoryLabels = new ArrayList<>(categoryTotals.keySet());
+        List<Integer> categoryQuantities = categoryLabels.stream()
+                .map(categoryTotals::get)
+                .collect(Collectors.toList());
+
         model.addAttribute("labels", labels);
         model.addAttribute("quantities", quantities);
+        model.addAttribute("warehouseLabels", warehouseLabels);
+        model.addAttribute("warehouseQuantities", warehouseQuantities);
+        model.addAttribute("categoryLabels", categoryLabels);
+        model.addAttribute("categoryQuantities", categoryQuantities);
 
         // Added attributes for the quickref add/create section of the homepage
         model.addAttribute("product", new Product());
