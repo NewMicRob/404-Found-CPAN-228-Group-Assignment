@@ -2,6 +2,8 @@ package com.example._Found.__Found_Group_Assignment.Services;
 
 import com.example._Found.__Found_Group_Assignment.Models.Product;
 import com.example._Found.__Found_Group_Assignment.Repositories.ProductRepository;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 import java.util.List;
 import java.util.Optional;
@@ -47,4 +49,10 @@ public class ProductService {
                 })
                 .orElseThrow(() -> new RuntimeException("Product not found with id: " + id));
     }
+
+    public Page<Product> findByName(String name, Pageable page) { return productRepository.findByNameContainingIgnoreCase(name,page); }
+
+    public Page<Product> findByCategory(int categoryId, Pageable page) { return productRepository.findByCategoryId(categoryId, page); }
+
+    public Page<Product> getAllProductsPageable(Pageable page) { return productRepository.findAll(page); }
 }

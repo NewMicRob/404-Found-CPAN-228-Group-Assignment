@@ -4,42 +4,132 @@
     <meta charset="UTF-8">
     <title>StockFlow - Products</title>
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link rel="stylesheet" th:href="@{/style.css}">
 </head>
+
+<script>
+    document.addEventListener("DOMContentLoaded", function() {
+
+        const filterSelect = document.getElementById("filterTypeSelect");
+        const nameFilter = document.getElementById("nameFilter");
+        const categoryFilter = document.getElementById("categoryFilter");
+
+        function updateFilters() {
+            // Read the currently selected value from the select
+            const filter = filterSelect.value;
+
+            // hide all first
+            nameFilter.style.display = "none";
+            categoryFilter.style.display = "none";
+
+            // show the selected filter
+            if (filter === "name") {
+                nameFilter.style.display = "block";
+            } else if (filter === "category") {
+                categoryFilter.style.display = "block";
+            }
+        }
+
+        // Run initially (this will respect the value that Thymeleaf set)
+        updateFilters();
+
+        // Run whenever the user changes the filter type
+        filterSelect.addEventListener("change", updateFilters);
+    });
+</script>
+
 <body>
 
 <div th:replace="~{Fragments/NavBar :: navbar}"></div>
 <main class="container mt-5">
     <h2>Products List</h2>
 
-    <!--    Button to open createProduct modal-->
-    <button type="button" data-bs-toggle="modal" data-bs-target="#createProductModal">
-        Create Product
-    </button>
+    <div style="margin:30px 0; gap: 30px;">
+        <!--    Button to open Collapse with CategoryTable-->
+        <p class="d-inline-flex gap-1">
+            <button class="btn btn-secondary" type="button" data-bs-toggle="collapse" data-bs-target="#collapseExample" aria-expanded="false" aria-controls="collapseExample">
+                Show All the categories
+            </button>
+        </p>
 
-    <!--    Button to open createCategory modal-->
-    <button type="button" data-bs-toggle="modal" data-bs-target="#createCategoryModal">
-        Create Category
-    </button>
-
-    <!--    Button to open Collapse with CategoryTable-->
-    <p class="d-inline-flex gap-1">
-        <button class="btn btn-primary"
-                type="button"
-                data-bs-toggle="collapse"
-                data-bs-target="#collapseExample"
-                aria-expanded="false"
-                aria-controls="collapseExample">
-            Show All the categories
+        <!--    Button to open createProduct modal-->
+        <button class="btn btn-primary" type="button" data-bs-toggle="modal" data-bs-target="#createProductModal">
+            Create Product
         </button>
-    </p>
 
-    <div class="collapse" id="collapseExample">
-        <div class="card card-body">
+        <!--    Button to open createCategory modal-->
+        <button class="btn btn-primary" type="button" data-bs-toggle="modal" data-bs-target="#createCategoryModal">
+            Create Category
+        </button>
 
-            <div th:insert="~{fragments/categoriesTable :: categoriesTable}"></div>
+        <div class="collapse" id="collapseExample">
+            <div class="card card-body">
 
+                <div th:insert="~{fragments/categoriesTable :: categoriesTable}"></div>
+
+            </div>
         </div>
     </div>
+
+<!--    Form to choose filtering and sorting options-->
+    <form th:action="@{/products}" method="get" class="filter-form">
+
+        <!-- Line 1 Filtering -->
+        <div class="filter-row">
+            <div>
+                <label>Filter by:</label>
+                <select name="filterType" id="filterTypeSelect">
+                    <option value="all" th:selected="${filterType == 'all'}">No filter</option>
+                    <option value="name" th:selected="${filterType == 'name'}">Name</option>
+                    <option value="category" th:selected="${filterType == 'category'}">Category</option>
+                </select>
+            </div>
+
+            <div id="nameFilter" style="display:none;">
+                <input type="text"
+                       name="search"
+                       id="search"
+                       placeholder="Product name"
+                       th:value="${search}">
+            </div>
+
+            <div id="categoryFilter" style="display:none;">
+                <select name="categoryId" id="categoryId">
+                    <option value="0">All Categories</option>
+                    <option th:each="cat : ${categories}"
+                            th:value="${cat.id}"
+                            th:text="${cat.name}"
+                            th:selected="${cat.id == categoryId}">
+                    </option>
+                </select>
+            </div>
+        </div>
+
+        <!-- Line 2 Sorting -->
+        <div class="filter-row">
+            <label>Sort by:</label>
+
+            <select name="sort">
+                <option value="id" th:selected="${sort == 'id'}">Id</option>
+                <option value="price" th:selected="${sort == 'price'}">Price</option>
+                <option value="category.name" th:selected="${sort == 'category.name'}">Category</option>
+            </select>
+
+            <select name="direction">
+                <option value="ASC" th:selected="${direction == 'ASC'}">Ascending</option>
+                <option value="DESC" th:selected="${direction == 'DESC'}">Descending</option>
+            </select>
+
+            <select name="size">
+                <option value="10" th:selected="${pageSize==10}">10</option>
+                <option value="25" th:selected="${pageSize==25}">25</option>
+                <option value="50" th:selected="${pageSize==50}">50</option>
+            </select>
+
+            <button class="btn btn-primary" type="submit">Apply</button>
+        </div>
+
+    </form>
 
     <div class="card-cont shadow-sm">
         <div class="main-card">
@@ -81,6 +171,73 @@
             </table>
         </div>
     </div>
+
+    <!-- Pagination Footer -->
+    <div style="padding: 15px 20px; border-top: 1px solid #e0e0e0; display: flex; justify-content: space-between; align-items: center; font-size: 14px; color: #666;">
+
+        <!-- Showing info -->
+        <span>
+        Showing <span th:text="${startIndex}">1</span>
+        to <span th:text="${endIndex}">10</span>
+        of <span th:text="${total}">100</span> entries
+    </span>
+
+        <!-- Pagination controls -->
+        <div style="display:flex; gap:5px; align-items:center;">
+
+            <!-- First -->
+            <a th:if="${currentPage > 0}"
+               th:href="@{/products(filterType=${filterType}, search=${search}, categoryId=${categoryId}, page=0, size=${pageSize}, sort=${sort}, direction=${direction})}"
+               style="padding:6px 10px;border:1px solid #ddd;background:white;border-radius:4px;text-decoration:none;">
+                « First
+            </a>
+            <span th:if="${currentPage == 0}"
+                  style="padding:6px 10px;border:1px solid #ddd;background:#f5f5f5;border-radius:4px;">
+            « First
+        </span>
+
+            <!-- Previous -->
+            <a th:if="${hasPrevious}"
+               th:href="@{/products(filterType=${filterType}, search=${search}, categoryId=${categoryId}, page=${currentPage-1}, size=${pageSize}, sort=${sort}, direction=${direction})}"
+               style="padding:6px 10px;border:1px solid #ddd;background:white;border-radius:4px;text-decoration:none;">
+                ‹ Prev
+            </a>
+            <span th:if="${!hasPrevious}"
+                  style="padding:6px 10px;border:1px solid #ddd;background:#f5f5f5;border-radius:4px;">
+            ‹ Prev
+        </span>
+
+            <!-- Page info -->
+            <span style="padding:6px 10px;">
+            Page <span th:text="${currentPage + 1}">1</span>
+            of <span th:text="${totalPages}">5</span>
+        </span>
+
+            <!-- Next -->
+            <a th:if="${hasNext}"
+               th:href="@{/products(filterType=${filterType}, search=${search}, categoryId=${categoryId}, page=${currentPage+1}, size=${pageSize}, sort=${sort}, direction=${direction})}"
+               style="padding:6px 10px;border:1px solid #ddd;background:white;border-radius:4px;text-decoration:none;">
+                Next ›
+            </a>
+            <span th:if="${!hasNext}"
+                  style="padding:6px 10px;border:1px solid #ddd;background:#f5f5f5;border-radius:4px;">
+            Next ›
+        </span>
+
+            <!-- Last -->
+            <a th:if="${currentPage < totalPages - 1}"
+               th:href="@{/products(filterType=${filterType}, search=${search}, categoryId=${categoryId}, page=${totalPages-1}, size=${pageSize}, sort=${sort}, direction=${direction})}"
+               style="padding:6px 10px;border:1px solid #ddd;background:white;border-radius:4px;text-decoration:none;">
+                Last »
+            </a>
+            <span th:if="${currentPage >= totalPages - 1}"
+                  style="padding:6px 10px;border:1px solid #ddd;background:#f5f5f5;border-radius:4px;">
+            Last »
+        </span>
+
+        </div>
+    </div>
+
 
     <!-- Include modal createProduct -->
     <div th:replace="~{Fragments/createProduct_modal :: createProduct_modal}"></div>

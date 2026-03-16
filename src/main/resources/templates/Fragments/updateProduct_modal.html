@@ -43,7 +43,7 @@
                         <div class="mb-3">
                             <label class="form-label">Category:</label>
                             <select id="update-category" name="category.id" class="form-select">
-                                <option th:each="cat : ${parentCategories}"
+                                <option th:each="cat : ${categories}"
                                         th:value="${cat.id}"
                                         th:text="${cat.name}">
                                 </option>
