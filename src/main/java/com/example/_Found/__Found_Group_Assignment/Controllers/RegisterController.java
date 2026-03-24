@@ -30,7 +30,7 @@ public class RegisterController {
             return "redirect:/register?error=exists";
         }
         user.setPassword(passwordEncoder.encode(user.getPassword()));
-        user.setRole("USER");
+        user.setRole(user.getRole());
 
         userRepository.save(user);
 

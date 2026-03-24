@@ -29,11 +29,16 @@ public class User implements UserDetails {
     private String password;
 
     @Column(nullable = false)
-    private String role = "USER";
+    // ADMIN, STAFF, VIEWER
+    private String role;
 
     @Override
     public Collection<? extends GrantedAuthority> getAuthorities() {
         return Collections.singletonList(new SimpleGrantedAuthority("ROLE_" + role));
     }
 
+    @Override public boolean isAccountNonExpired() { return true; }
+    @Override public boolean isAccountNonLocked() { return true; }
+    @Override public boolean isCredentialsNonExpired() { return true; }
+    @Override public boolean isEnabled() { return true; }
 }

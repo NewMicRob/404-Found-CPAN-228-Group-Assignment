@@ -27,6 +27,15 @@
           <input type="password" class="form-control" id="password" th:field="*{password}" required>
         </div>
 
+        <!--Select a user role-->
+        <div class="mb-3">
+          <label for="role" class="form-label">Role</label>
+          <select class="form-select" id="role" th:field="*{role}" required>
+            <option value="VIEWER">Viewer</option>
+            <option value="STAFF">Staff</option>
+          </select>
+        </div>
+
         <button type="submit" class="btn btn-primary btn-lg">Register</button>
       </form>
       <div style="text-align: center;">

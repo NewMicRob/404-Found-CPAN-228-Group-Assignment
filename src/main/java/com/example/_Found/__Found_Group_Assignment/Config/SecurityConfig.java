@@ -9,7 +9,6 @@ import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.security.web.SecurityFilterChain;
 
 @Configuration
-@EnableWebSecurity
 public class SecurityConfig {
 
     @Bean
@@ -20,8 +19,18 @@ public class SecurityConfig {
     @Bean
     public SecurityFilterChain securityFilterChain(HttpSecurity http) throws Exception {
         http
+                .csrf(csrf -> csrf.ignoringRequestMatchers("/h2-console/**"))
                 .authorizeHttpRequests(auth -> auth
-                        .requestMatchers("/register", "/").permitAll()
+                        // Public access
+                        .requestMatchers("/register", "/login", "/h2-console/**").permitAll()
+
+                        // Admin only
+                       .requestMatchers("/h2-console/**").hasRole("ADMIN")
+
+                        // Admin + Staff
+                        .requestMatchers("/products/update", "/products/delete/*", "/products/get/**").hasAnyRole("ADMIN", "STAFF")
+
+                        // Everything else requires authentication
                         .anyRequest().authenticated()
                 )
                 .formLogin(form -> form
@@ -29,7 +38,10 @@ public class SecurityConfig {
                         .defaultSuccessUrl("/", true)
                         .permitAll()
                 )
-                .logout(logout -> logout.permitAll());
+                .logout(logout -> logout.logoutSuccessUrl("/login?logout"))
+                .headers(headers -> headers
+                        .frameOptions(frame -> frame.sameOrigin()));
+
         return http.build();
     }
 }
