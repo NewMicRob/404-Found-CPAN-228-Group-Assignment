@@ -1,11 +1,11 @@
 package com.example._Found.__Found_Group_Assignment.Services;
 
-import com.example._Found.__Found_Group_Assignment.Models.Category;
-import com.example._Found.__Found_Group_Assignment.Repositories.CategoryRepository;
+import java.util.List;
+
 import org.springframework.stereotype.Service;
 
-import java.util.List;
-import java.util.Optional;
+import com.example._Found.__Found_Group_Assignment.Models.Category;
+import com.example._Found.__Found_Group_Assignment.Repositories.CategoryRepository;
 
 @Service
 public class CategoryService {
