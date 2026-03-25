@@ -2,10 +2,12 @@ package com.example._Found.__Found_Group_Assignment.Controllers;
 
 import com.example._Found.__Found_Group_Assignment.Models.User;
 import com.example._Found.__Found_Group_Assignment.Repositories.UserRepository;
+import jakarta.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
+import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.*;
 
 @Controller
@@ -25,12 +27,16 @@ public class RegisterController {
     }
 
     @PostMapping
-    public String registerUserToDB(@ModelAttribute("user") User user) {
+    public String registerUserToDB(@Valid @ModelAttribute("user") User user, BindingResult result) {
         if (userRepository.findByUsername(user.getUsername()) != null) {
-            return "redirect:/register?error=exists";
+            result.rejectValue("username", "error.username", "Username has been taken");
         }
+
+        if (result.hasErrors()) {
+            return "register";
+        }
+
         user.setPassword(passwordEncoder.encode(user.getPassword()));
-        user.setRole(user.getRole());
 
         userRepository.save(user);
 
