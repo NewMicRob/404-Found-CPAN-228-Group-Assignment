@@ -19,13 +19,13 @@ public class SecurityConfig {
     @Bean
     public SecurityFilterChain securityFilterChain(HttpSecurity http) throws Exception {
         http
-                .csrf(csrf -> csrf.ignoringRequestMatchers("/h2-console/**"))
+                .csrf(csrf -> csrf.disable())
                 .authorizeHttpRequests(auth -> auth
                         // Public access
-                        .requestMatchers("/register", "/login", "/h2-console/**").permitAll()
+                        .requestMatchers("/register", "/login").permitAll()
 
                         // Admin only
-                       .requestMatchers("/h2-console/**").hasRole("ADMIN")
+                       .requestMatchers("/h2-console", "/h2-console/**").hasRole("ADMIN")
 
                         // Admin + Staff
                         .requestMatchers("/products/update", "/products/delete/*", "/products/get/**").hasAnyRole("ADMIN", "STAFF")

@@ -84,9 +84,7 @@ public class ProductController {
     @GetMapping("/get/{id}")
     @ResponseBody
     public Product getProduct(@PathVariable int id) {
-        Product p = productService.getProductById(id)
-                .orElseThrow(() -> new RuntimeException("Product not found"));
-        return p;
+        return productService.getProductById(id);
     }
 
     // Handle createProduct form submission
@@ -120,16 +118,11 @@ public class ProductController {
         return "redirect:/products";
     }
 
-    // Handle product deletion (mark as deleted)
     @PostMapping("/delete/{id}")
     public String deleteProduct(@PathVariable("id") int id) {
-        Optional<Product> optionalProduct = productService.getProductById(id); // Optional<Product>
-
-        if (optionalProduct.isPresent()) {
-            Product product = optionalProduct.get();
-            product.setDeleted(true);            // mark as deleted
-            productService.saveProduct(product);
-        }
+        Product product = productService.getProductById(id);
+        product.setDeleted(true);
+        productService.saveProduct(product);
         return "redirect:/products";
     }
 

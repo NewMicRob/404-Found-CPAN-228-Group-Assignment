@@ -22,13 +22,12 @@ public class ProductService {
     }
 
     // Get a product by ID
-    public Optional<Product> getProductById(Integer id) {
-        return productRepository.findById(id);
+    public Product getProductById(Integer id) {
+        return productRepository.findById(id).orElse(null);
     }
 
     // Save or update a product
-    public Product saveProduct(Product product) {
-        return productRepository.save(product);
+    public void saveProduct(Product product) {productRepository.save(product);
     }
 
     // Get products by category by ID
@@ -43,7 +42,6 @@ public class ProductService {
                     product.setPrice(updatedProduct.getPrice());
                     product.setTaxRate(updatedProduct.getTaxRate());
                     product.setCategory(updatedProduct.getCategory());
-                    // keep deleted flag as is, or set if you want
                     product.setDeleted(updatedProduct.isDeleted());
                     return productRepository.save(product);
                 })
@@ -54,5 +52,5 @@ public class ProductService {
 
     public Page<Product> findByCategory(int categoryId, Pageable page) { return productRepository.findByCategoryId(categoryId, page); }
 
-    public Page<Product> getAllProductsPageable(Pageable page) { return productRepository.findAll(page); }
+    public Page<Product> getAllProductsPageable(Pageable page) { return productRepository.findByDeletedFalse(page); }
 }
