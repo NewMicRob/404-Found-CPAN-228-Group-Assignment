@@ -48,7 +48,7 @@ public class ProductService {
                 .orElseThrow(() -> new RuntimeException("Product not found with id: " + id));
     }
 
-    public Page<Product> findByName(String name, Pageable page) { return productRepository.findByNameContainingIgnoreCase(name,page); }
+    public Page<Product> findByName(String name, Pageable page) { return productRepository.findByNameContainingIgnoreCaseAndDeletedFalse(name,page); }
 
     public Page<Product> findByCategory(int categoryId, Pageable page) { return productRepository.findByCategoryId(categoryId, page); }
 
