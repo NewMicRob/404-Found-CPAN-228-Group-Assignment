@@ -2,6 +2,7 @@ package com.example._Found.__Found_Group_Assignment.Models;
 
 import jakarta.persistence.*;
 import jakarta.validation.constraints.NotBlank;
+import jakarta.validation.constraints.Size;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
@@ -24,10 +25,12 @@ public class User implements UserDetails {
     private Long id;
 
     @Column(nullable = false, unique = true)
-    @NotBlank(message = "The user name is required")
+    @NotBlank(message = "The username is required")
     private String username;
 
     @Column(nullable = false)
+    @NotBlank(message = "Password is required")
+    @Size(min = 4, message = "Password must be more than 4 characters long")
     private String password;
 
     @Column(nullable = false)

@@ -17,14 +17,20 @@
     <div class="register-card">
       <form th:action="@{/register}" th:object="${user}" method="POST" novalidate>
 
+        <div th:if="${#fields.hasErrors('username')}" th:errors="*{username}" class="alert alert-danger">
+        </div>
+
+        <div th:if="${#fields.hasErrors('password')}" th:errors="*{password}" class="alert alert-danger">
+        </div>
+
         <div class="mb-3">
           <label for="username" class="form-label">Username</label>
-          <input type="text" class="form-control" id="username" th:field="*{username}" required>
+          <input type="text" class="form-control" id="username" th:field="*{username}" th:classappend="${#fields.hasErrors('username')} ? 'is-invalid' : ''" required>
         </div>
 
         <div class="mb-3" >
           <label for="password" class="form-label">Password</label>
-          <input type="password" class="form-control" id="password" th:field="*{password}" required>
+          <input type="password" class="form-control" id="password" th:field="*{password}" th:classappend="${#fields.hasErrors('password')} ? 'is-invalid' : ''" required>
         </div>
 
         <!--Select a user role-->
