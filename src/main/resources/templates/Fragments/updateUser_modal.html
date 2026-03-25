@@ -1,0 +1,50 @@
+<div th:fragment="updateUser_modal">
+    <div class="modal fade" id="updateUser_modal" tabindex="-1">
+        <div class="modal-dialog modal-dialog-centered">
+            <div class="modal-content">
+
+                <div class="modal-header">
+                    <h5 class="modal-title">Update User</h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
+                </div>
+
+                <div class="modal-body">
+
+                    <form th:action="@{/admin/update}" method="POST">
+
+                        <!-- Hidden ID -->
+                        <input type="hidden" id="update-user-id" name="id"/>
+
+                        <!-- Username -->
+                        <div class="mb-3">
+                            <label for="update-username" class="form-label">Username:</label>
+                            <input type="text"
+                                   id="update-username"
+                                   name="username"
+                                   class="form-control"
+                                   required
+                                   minlength="3"
+                                   maxlength="50">
+                            <div class="text-danger"></div>
+                        </div>
+
+                        <!-- Role -->
+                        <div class="mb-3">
+                            <label class="form-label">Role:</label>
+                            <select id="update-role" name="role" class="form-select">
+                                <option value="STAFF">STAFF</option>
+                                <option value="VIEWER">VIEWER</option>
+                            </select>
+                        </div>
+
+                        <button type="submit" class="btn btn-primary">
+                            Update User
+                        </button>
+
+                    </form>
+
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

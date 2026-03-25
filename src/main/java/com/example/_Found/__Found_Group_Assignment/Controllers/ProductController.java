@@ -7,10 +7,12 @@ import com.example._Found.__Found_Group_Assignment.Services.ProductService;
 import jakarta.validation.Valid;
 import org.springframework.data.domain.*;
 import org.springframework.data.domain.Sort;
+import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.security.core.Authentication;
 
 import java.util.Optional;
 
@@ -25,17 +27,6 @@ public class ProductController {
         this.productService = productService;
         this.categoryService = categoryService;
     }
-
-//    // Show all the products
-//    @GetMapping
-//    public String showAllProducts(Model model) {
-//        model.addAttribute("products", productService.getAllProducts());
-//        model.addAttribute("product", new Product());
-//        model.addAttribute("categories", categoryService.getAllCategories());
-//        model.addAttribute("parentCategories", categoryService.getParentCategories());
-//        model.addAttribute("category", new Category());
-//        return "products";
-//    }
 
     @GetMapping
     public String showAllProducts(
@@ -93,9 +84,7 @@ public class ProductController {
     @GetMapping("/get/{id}")
     @ResponseBody
     public Product getProduct(@PathVariable int id) {
-        Product p = productService.getProductById(id)
-                .orElseThrow(() -> new RuntimeException("Product not found"));
-        return p;
+        return productService.getProductById(id);
     }
 
     // Handle createProduct form submission
@@ -129,26 +118,13 @@ public class ProductController {
         return "redirect:/products";
     }
 
-    // Handle product deletion (mark as deleted)
-    @GetMapping("/delete/{id}")
+    @PostMapping("/delete/{id}")
     public String deleteProduct(@PathVariable("id") int id) {
-        Optional<Product> optionalProduct = productService.getProductById(id); // Optional<Product>
-
-        if (optionalProduct.isPresent()) {
-            Product product = optionalProduct.get();
-            product.setDeleted(true);            // mark as deleted
-            productService.saveProduct(product);
-        }
+        Product product = productService.getProductById(id);
+        product.setDeleted(true);
+        productService.saveProduct(product);
         return "redirect:/products";
     }
-
-//    @GetMapping("/update/{id}")
-//    public String showUpdateProduct(@PathVariable int id, Model model) {
-//        Product product = productService.getProductById(id).orElseThrow(() -> new RuntimeException("Product not found"));
-//        model.addAttribute("product", product);
-//        model.addAttribute("parentCategories", categoryService.getParentCategories());
-//        return "Fragments/updateProduct_modal :: updateProduct_modal";
-//    }
 
     @PostMapping("/update")
     public String updateProduct(@Valid @ModelAttribute("product") Product product,
