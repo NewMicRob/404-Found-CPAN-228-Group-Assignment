@@ -7,37 +7,6 @@
     <link rel="stylesheet" th:href="@{/style.css}">
 </head>
 
-<script>
-    document.addEventListener("DOMContentLoaded", function() {
-
-        const filterSelect = document.getElementById("filterTypeSelect");
-        const nameFilter = document.getElementById("nameFilter");
-        const categoryFilter = document.getElementById("categoryFilter");
-
-        function updateFilters() {
-            // Read the currently selected value from the select
-            const filter = filterSelect.value;
-
-            // hide all first
-            nameFilter.style.display = "none";
-            categoryFilter.style.display = "none";
-
-            // show the selected filter
-            if (filter === "name") {
-                nameFilter.style.display = "block";
-            } else if (filter === "category") {
-                categoryFilter.style.display = "block";
-            }
-        }
-
-        // Run initially (this will respect the value that Thymeleaf set)
-        updateFilters();
-
-        // Run whenever the user changes the filter type
-        filterSelect.addEventListener("change", updateFilters);
-    });
-</script>
-
 <body>
 
 <div th:replace="~{Fragments/NavBar :: navbar}"></div>
@@ -254,7 +223,7 @@
     <div th:replace="~{Fragments/createCategory_modal :: createCategory_modal}"></div>
 
     <!-- Include modal updateProduct -->
-    <div th:replace="~{Fragments/updateProduct_modal :: updateProduct_modal('/products/update')}"></div>
+    <div th:replace="~{Fragments/updateProduct_modal :: updateProduct_modal}"></div>
 
 
 

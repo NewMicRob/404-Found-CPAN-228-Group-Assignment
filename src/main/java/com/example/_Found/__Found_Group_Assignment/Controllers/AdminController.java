@@ -1,55 +1,52 @@
 package com.example._Found.__Found_Group_Assignment.Controllers;
 
 import com.example._Found.__Found_Group_Assignment.Models.Product;
-import com.example._Found.__Found_Group_Assignment.Services.ProductService;
+import com.example._Found.__Found_Group_Assignment.Models.User;
+import com.example._Found.__Found_Group_Assignment.Services.UserService;
+import jakarta.validation.Valid;
 import org.springframework.data.domain.*;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
+import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.*;
-import com.example._Found.__Found_Group_Assignment.Services.CategoryService;
 
 @Controller
 @RequestMapping("/admin")
 public class AdminController {
 
-    private final ProductService productService;
-    private final CategoryService categoryService;
+    private final UserService userService;
 
-    public AdminController(ProductService productService, CategoryService categoryService) {
-        this.productService = productService;
-        this.categoryService = categoryService;
+    public AdminController(UserService userService) {
+        this.userService = userService;
     }
 
-    // Show page with optional name filter
+    // Show users with optional search
     @GetMapping
-    public String adminProducts(
+    public String adminUsers(
             @RequestParam(name = "search", defaultValue = "") String search,
-            @RequestParam(name = "page", defaultValue = "0") int  page,
+            @RequestParam(name = "page", defaultValue = "0") int page,
             Model model) {
 
         Pageable pageable = PageRequest.of(page, 5);
-
-        Page<Product> productPage;
+        Page<User> userPage;
 
         if (!search.isEmpty()) {
-                productPage = productService.findByName(search, pageable);
+            userPage = userService.findByUsernamePageable(search, pageable);
         } else {
-            productPage = productService.getAllProductsPageable(pageable);
+            userPage = userService.getAllUsersPageable(pageable);
         }
 
-        model.addAttribute("products", productPage.getContent());
+        model.addAttribute("users", userPage.getContent());
         model.addAttribute("search", search);
-        model.addAttribute("categories", categoryService.getAllCategories());
-        model.addAttribute("selectedProduct", productPage.hasContent() ? productPage.getContent().get(0) : null);
         model.addAttribute("currentPage", page);
-        model.addAttribute("totalPages", productPage.getTotalPages());
-        model.addAttribute("total", productPage.getTotalElements());
-        model.addAttribute("hasPrevious", productPage.hasPrevious());
-        model.addAttribute("hasNext", productPage.hasNext());
+        model.addAttribute("totalPages", userPage.getTotalPages());
+        model.addAttribute("total", userPage.getTotalElements());
+        model.addAttribute("hasPrevious", userPage.hasPrevious());
+        model.addAttribute("hasNext", userPage.hasNext());
         model.addAttribute("pageSize", 5);
 
         int startIndex = page * 5 + 1;
-        int endIndex = Math.min((page + 1) * 5, (int) productPage.getTotalElements());
+        int endIndex = Math.min((page + 1) * 5, (int) userPage.getTotalElements());
 
         model.addAttribute("startIndex", startIndex);
         model.addAttribute("endIndex", endIndex);
@@ -57,20 +54,34 @@ public class AdminController {
         return "admin";
     }
 
-    // Delete
-    @PostMapping("/delete/{id}")
-    public String deleteProduct(@PathVariable int id) {
-        Product product = productService.getProductById(id);
-        product.setDeleted(true);
-        productService.saveProduct(product);
+    // Used for fetching data for updateUser_modal
+    @GetMapping("/get/{id}")
+    @ResponseBody
+    public User getUser(@PathVariable Long id) {
+        return userService.getUserById(id);
+    }
 
+    // Delete user
+    @PostMapping("/delete/{id}")
+    public String deleteUser(@PathVariable Long id) {
+        userService.deleteUser(id);
         return "redirect:/admin";
     }
 
-    // Update
+    // Update user
     @PostMapping("/update")
-    public String updateProduct(@ModelAttribute Product product) {
-        productService.saveProduct(product);
+    public String updateUser(@Valid @ModelAttribute("user") User user,
+                             BindingResult bindingResult,
+                             Model model) {
+
+        if (bindingResult.hasErrors()) { return "admin";}
+
+        User existingUser = userService.getUserById(user.getId());
+
+        existingUser.setUsername(user.getUsername());
+        existingUser.setRole(user.getRole());
+        userService.saveUser(existingUser);
+
         return "redirect:/admin";
     }
 }
