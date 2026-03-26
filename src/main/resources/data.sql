@@ -155,13 +155,13 @@ INSERT INTO inventory (product_id, warehouse_id, quantity, last_updated) VALUES 
 INSERT INTO inventory (product_id, warehouse_id, quantity, last_updated) VALUES (50, 4, 47, CURRENT_TIMESTAMP);
 
 -- Users | Password for all the users - password123
-INSERT INTO users (username, password, role) VALUES ('Alex', '$2a$10$7QJ5Q7kQp7l5z9g9z8JkUOQ9g0w8nXk9f8p8Q7j6pQ0z1k9m8Jx6a', 'STAFF');
-INSERT INTO users (username, password, role) VALUES ('Ben', '$2a$10$7QJ5Q7kQp7l5z9g9z8JkUOQ9g0w8nXk9f8p8Q7j6pQ0z1k9m8Jx6a', 'VIEWER');
-INSERT INTO users (username, password, role) VALUES ('Chris', '$2a$10$7QJ5Q7kQp7l5z9g9z8JkUOQ9g0w8nXk9f8p8Q7j6pQ0z1k9m8Jx6a', 'STAFF');
-INSERT INTO users (username, password, role) VALUES ('David', '$2a$10$7QJ5Q7kQp7l5z9g9z8JkUOQ9g0w8nXk9f8p8Q7j6pQ0z1k9m8Jx6a', 'VIEWER');
-INSERT INTO users (username, password, role) VALUES ('Emma', '$2a$10$7QJ5Q7kQp7l5z9g9z8JkUOQ9g0w8nXk9f8p8Q7j6pQ0z1k9m8Jx6a', 'STAFF');
-INSERT INTO users (username, password, role) VALUES ('Fiona', '$2a$10$7QJ5Q7kQp7l5z9g9z8JkUOQ9g0w8nXk9f8p8Q7j6pQ0z1k9m8Jx6a', 'VIEWER');
-INSERT INTO users (username, password, role) VALUES ('George', '$2a$10$7QJ5Q7kQp7l5z9g9z8JkUOQ9g0w8nXk9f8p8Q7j6pQ0z1k9m8Jx6a', 'STAFF');
-INSERT INTO users (username, password, role) VALUES ('Hannah', '$2a$10$7QJ5Q7kQp7l5z9g9z8JkUOQ9g0w8nXk9f8p8Q7j6pQ0z1k9m8Jx6a', 'VIEWER');
-INSERT INTO users (username, password, role) VALUES ('Ivan', '$2a$10$7QJ5Q7kQp7l5z9g9z8JkUOQ9g0w8nXk9f8p8Q7j6pQ0z1k9m8Jx6a', 'STAFF');
-INSERT INTO users (username, password, role) VALUES ('Julia', '$2a$10$7QJ5Q7kQp7l5z9g9z8JkUOQ9g0w8nXk9f8p8Q7j6pQ0z1k9m8Jx6a', 'VIEWER');
+INSERT INTO users (username, password, role) VALUES ('Alex', '$2a$10$twpRa12mTwBE/7ds3Bkj1uIKexad6Ni1/Ts30mAuZQClrgbJEuahW', 'STAFF');
+INSERT INTO users (username, password, role) VALUES ('Ben', '$2a$10$twpRa12mTwBE/7ds3Bkj1uIKexad6Ni1/Ts30mAuZQClrgbJEuahW', 'VIEWER');
+INSERT INTO users (username, password, role) VALUES ('Chris', '$2a$10$twpRa12mTwBE/7ds3Bkj1uIKexad6Ni1/Ts30mAuZQClrgbJEuahW', 'STAFF');
+INSERT INTO users (username, password, role) VALUES ('David', '$2a$10$twpRa12mTwBE/7ds3Bkj1uIKexad6Ni1/Ts30mAuZQClrgbJEuahW', 'VIEWER');
+INSERT INTO users (username, password, role) VALUES ('Emma', '$2a$10$twpRa12mTwBE/7ds3Bkj1uIKexad6Ni1/Ts30mAuZQClrgbJEuahW', 'STAFF');
+INSERT INTO users (username, password, role) VALUES ('Fiona', '$2a$10$twpRa12mTwBE/7ds3Bkj1uIKexad6Ni1/Ts30mAuZQClrgbJEuahW', 'VIEWER');
+INSERT INTO users (username, password, role) VALUES ('George', '$2a$10$twpRa12mTwBE/7ds3Bkj1uIKexad6Ni1/Ts30mAuZQClrgbJEuahW', 'STAFF');
+INSERT INTO users (username, password, role) VALUES ('Hannah', '$2a$10$twpRa12mTwBE/7ds3Bkj1uIKexad6Ni1/Ts30mAuZQClrgbJEuahW', 'VIEWER');
+INSERT INTO users (username, password, role) VALUES ('Ivan', '$2a$10$twpRa12mTwBE/7ds3Bkj1uIKexad6Ni1/Ts30mAuZQClrgbJEuahW', 'STAFF');
+INSERT INTO users (username, password, role) VALUES ('Julia', '$2a$10$twpRa12mTwBE/7ds3Bkj1uIKexad6Ni1/Ts30mAuZQClrgbJEuahW', 'VIEWER');

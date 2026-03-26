@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html xmlns:th="http://www.thymeleaf.org">
+<html xmlns:th="http://www.thymeleaf.org" xmlns:sec="http://www.w3.org/1999/xhtml">
 <head>
     <meta charset="UTF-8">
     <title>StockFlow - Home</title>
@@ -19,7 +19,7 @@
         <h2>Welcome to StockFlow!</h2>
 
         <!-- Dashboard -->
-        <div class="row mb-5">
+        <div class="row mb-5" sec:authorize="hasRole('ADMIN') or hasRole('STAFF')">
             <div class="col-12">
                 <h4 class="mb-3">Quick Actions</h4>
                 <div class="row g-3">
