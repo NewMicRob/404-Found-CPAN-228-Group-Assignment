@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html xmlns:th="http://www.thymeleaf.org">
+<html xmlns:th="http://www.thymeleaf.org" xmlns:sec="http://www.w3.org/1999/xhtml">
 <head>
     <meta charset="UTF-8">
     <title>StockFlow - Shipments</title>
@@ -51,7 +51,8 @@
             </div>
         </div>
         <div class="mt-3">
-            <button type="button" class="btn btn-success" data-bs-toggle="modal" data-bs-target="#createShipmentModal">
+            <button type="button" class="btn btn-success" data-bs-toggle="modal" data-bs-target="#createShipmentModal"
+                    sec:authorize="hasRole('ADMIN') or hasRole('STAFF')">
                 Add Shipment
             </button>
         </div>
