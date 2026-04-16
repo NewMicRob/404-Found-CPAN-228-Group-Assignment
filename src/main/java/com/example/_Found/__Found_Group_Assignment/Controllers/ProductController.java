@@ -76,6 +76,7 @@ public class ProductController {
         model.addAttribute("product", new Product());
         model.addAttribute("categories", categoryService.getAllCategories());
         model.addAttribute("parentCategories", categoryService.getParentCategories());
+        model.addAttribute("subCategories", categoryService.getSubCategories());
         model.addAttribute("category", new Category());
 
         return "products";
@@ -127,17 +128,11 @@ public class ProductController {
     }
 
     @PostMapping("/update")
-    public String updateProduct(@Valid @ModelAttribute("product") Product product,
-                                BindingResult bindingResult,
-                                Model model) {
+    public String updateProduct(@Valid @ModelAttribute("Product") Product product, BindingResult bindingResult) {
+
         if (bindingResult.hasErrors()) {
-            model.addAttribute("parentCategories", categoryService.getParentCategories());
-            return "redirect:/products";
-        }
+            return "products"; }
 
         productService.saveProduct(product);
-
-        return "redirect:/products";
-    }
-
+        return "redirect:/products"; }
 }

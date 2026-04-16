@@ -9,7 +9,7 @@
 
 <body>
 
-<div th:replace="~{Fragments/NavBar :: navbar}"></div>
+<div th:replace="~{Fragments/navBar :: navbar}"></div>
 <main class="container mt-5">
     <h2>Products List</h2>
 
@@ -36,7 +36,7 @@
         <div class="collapse" id="collapseExample">
             <div class="card card-body">
 
-                <div th:insert="~{fragments/categoriesTable :: categoriesTable}"></div>
+                <div th:insert="~{Fragments/categoriesTable :: categoriesTable}"></div>
 
             </div>
         </div>
@@ -67,7 +67,7 @@
             <div id="categoryFilter" style="display:none;">
                 <select name="categoryId" id="categoryId">
                     <option value="0">All Categories</option>
-                    <option th:each="cat : ${categories}"
+                    <option th:each="cat : ${subCategories}"
                             th:value="${cat.id}"
                             th:text="${cat.name}"
                             th:selected="${cat.id == categoryId}">
@@ -228,8 +228,40 @@
 
 
 </main>
-<div th:replace="~{Fragments/Footer :: footer}"></div>
+<div th:replace="~{Fragments/footer :: footer}"></div>
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+
+<script>
+    document.addEventListener("DOMContentLoaded", function() {
+
+        const filterSelect = document.getElementById("filterTypeSelect");
+        const nameFilter = document.getElementById("nameFilter");
+        const categoryFilter = document.getElementById("categoryFilter");
+
+        function updateFilters() {
+            // Read the currently selected value from the select
+            const filter = filterSelect.value;
+
+            // hide all first
+            nameFilter.style.display = "none";
+            categoryFilter.style.display = "none";
+
+            // show the selected filter
+            if (filter === "name") {
+                nameFilter.style.display = "block";
+            } else if (filter === "category") {
+                categoryFilter.style.display = "block";
+            }
+        }
+
+        // Run initially (this will respect the value that Thymeleaf set)
+        updateFilters();
+
+        // Run whenever the user changes the filter type
+        filterSelect.addEventListener("change", updateFilters);
+    });
+</script>
+
 <script>
     function openUpdateModal(button) {
         const productId = button.getAttribute('data-id');
