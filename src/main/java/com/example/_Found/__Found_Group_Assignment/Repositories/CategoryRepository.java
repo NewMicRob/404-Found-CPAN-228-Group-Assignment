@@ -8,6 +8,6 @@ public interface CategoryRepository extends JpaRepository<Category, Integer> {
     // Find all top-level categories (no parent)
     List<Category> findByParentIsNull();
 
-    // Find all children of a specific category
-    List<Category> findByParentId(Integer parentId);
+    // Find all subcategories (have parents)
+    List<Category> findByParentIsNotNull();
 }

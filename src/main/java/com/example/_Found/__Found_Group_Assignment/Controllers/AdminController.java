@@ -24,7 +24,7 @@ public class AdminController {
     @GetMapping
     public String adminUsers(
             @RequestParam(name = "search", defaultValue = "") String search,
-            @RequestParam(name = "page", defaultValue = "0") int page,
+            @RequestParam(name = "page", defaultValue = "0") int page, // Current page
             Model model) {
 
         Pageable pageable = PageRequest.of(page, 5);
@@ -70,18 +70,9 @@ public class AdminController {
 
     // Update user
     @PostMapping("/update")
-    public String updateUser(@Valid @ModelAttribute("user") User user,
-                             BindingResult bindingResult,
-                             Model model) {
-
+    public String updateUser(@Valid @ModelAttribute("User") User user, BindingResult bindingResult) {
         if (bindingResult.hasErrors()) { return "admin";}
-
-        User existingUser = userService.getUserById(user.getId());
-
-        existingUser.setUsername(user.getUsername());
-        existingUser.setRole(user.getRole());
-        userService.saveUser(existingUser);
-
+        userService.saveUser(user);
         return "redirect:/admin";
     }
 }

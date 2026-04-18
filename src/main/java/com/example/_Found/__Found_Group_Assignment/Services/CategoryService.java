@@ -29,14 +29,8 @@ public class CategoryService {
         return categoryRepository.save(category);
     }
 
-    // Delete a category by ID
-    public void deleteCategory(int id) {
-        categoryRepository.deleteById(id);
-    }
-
-    // Get direct children of a category by ID
-    public List<Category> getChildren(int parentId) {
-        return categoryRepository.findByParentId(parentId);
+    public List<Category> getSubCategories() {
+        return categoryRepository.findByParentIsNotNull();
     }
 
     public List<Category> getParentCategories(){
