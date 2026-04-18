@@ -89,10 +89,19 @@ The page includes an update modal for editing user details.
 
 
 ## How to Run
+This project uses Spring Boot Profiles to switch between enviornments automatically depending on how the application is launched. No code changes are required to switch between the Dev enviornment, and the Qa(Quality Assurance) Enviornment. 
+
+### Dev Enviornment
+1. Open Code Editor (Vs Code, or IntelliJ)
+2. Click play when viewing the application file(Green button top right fo editor)
+3. The console will display Profile DEV.
+4. Go to: [http://localhost:8080](http://localhost:8080)
+
+### QA Enviornment
 1. Open Docker Desktop and ensure it’s started
 2. Open the project folder in Terminal `cd 404-Found-CPAN-228-Group-Assignment/`
-3. Build the Docker Images `docker compose build`
-4. Start containers `docker compose up -d`
+3. Build the Docker Images and start them `docker compose up --build -d`
+4. The console will display Profile QA.
 5. Go to: [http://localhost:8080](http://localhost:8080)
 
 
