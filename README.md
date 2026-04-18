@@ -100,7 +100,7 @@ This project uses Spring Boot Profiles to switch between enviornments automatica
 ### QA Enviornment
 1. Open Docker Desktop and ensure it’s started
 2. Open the project folder in Terminal `cd 404-Found-CPAN-228-Group-Assignment/`
-3. Build the Docker Images and start them `docker compose up --build -d`
+3. Build the Docker Images and start the containers `docker compose up --build -d`
 4. The terminal will display Profile QA.
 5. Go to: [http://localhost:8080](http://localhost:8080)
 
