@@ -14,12 +14,10 @@ target/
 .sts4-cache
 
 ### IntelliJ IDEA ###
-.idea/
+.idea
 *.iws
 *.iml
 *.ipr
-out/
-cmake-build-*/
 
 ### NetBeans ###
 /nbproject/private/
@@ -34,35 +32,8 @@ build/
 ### VS Code ###
 .vscode/
 
+
 ### macOS ###
 .DS_Store
 .AppleDouble
 .LSOverride
-._*
-.Spotlight-V100
-.Trashes
-
-### Build/ Compiler ###
-target/
-*.class
-*.jar
-*.war
-*.ear
-
-### Maven ###
-.mvn/
-mvnw
-mvnw.cmd
-.mvn/wrapper/maven-wrapper.jar
-
-### Database/ Storage ###
-*.mv.db
-*.trace.db
-.data/
-
-### Docker ###
-docker-compose.override.yml
-
-### Logs / Temp ###
-*.log
-tmp/
