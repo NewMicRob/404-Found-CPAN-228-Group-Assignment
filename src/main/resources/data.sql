@@ -1,3 +1,15 @@
+SET FOREIGN_KEY_CHECKS = 0;
+
+TRUNCATE TABLE product_supplies;
+TRUNCATE TABLE shipments;
+TRUNCATE TABLE inventory;
+TRUNCATE TABLE products;
+TRUNCATE TABLE warehouses;
+TRUNCATE TABLE categories;
+TRUNCATE TABLE users;
+
+SET FOREIGN_KEY_CHECKS = 1;
+
 -- CATEGORIES
 -- Parent categories
 INSERT INTO categories (name, parent_id) VALUES ('Tops', NULL);
