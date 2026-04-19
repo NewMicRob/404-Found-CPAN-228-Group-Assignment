@@ -89,20 +89,22 @@ The page includes an update modal for editing user details.
 
 
 ## How to Run
-This project uses Spring Boot Profiles to switch between enviornments automatically depending on how the application is launched. No code changes are required to switch between the Dev enviornment, and the Qa(Quality Assurance) Enviornment. 
 
-### Dev Enviornment
-1. Open Code Editor (Vs Code, or IntelliJ)
-2. Click play when viewing the application file(Green button top right fo editor)
-3. The terminal will display Profile DEV.
-4. Go to: [http://localhost:8080](http://localhost:8080)
+### Option 1: Local Development
+1.  Open the project in your IDE (IntelliJ or VS Code).
+2.  Run the application via the `StockflowApplication.java` file.
+3.  The application defaults to the `dev` profile.
+4.  **Access URL:** [http://localhost:8081](http://localhost:8081)
 
-### QA Enviornment
-1. Open Docker Desktop and ensure it’s started
-2. Open the project folder in Terminal `cd 404-Found-CPAN-228-Group-Assignment/`
-3. Build the Docker Images and start the containers `docker compose up --build -d`
-4. The terminal will display Profile QA.
-5. Go to: [http://localhost:8080](http://localhost:8080)
+### Option 2: Docker Deployment
+1.  Ensure Docker Desktop is running.
+2.  Navigate to the project root in your terminal.
+3.  Run the following command:
+    ```bash
+    docker compose up --build -d
+    ```
+4.  **QA Instance:** [http://localhost:8080](http://localhost:8080)
+5.  **Dev Instance:** [http://localhost:8081](http://localhost:8081)
 
 
 ## Created by
