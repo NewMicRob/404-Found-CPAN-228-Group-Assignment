@@ -21,4 +21,4 @@ RUN ./mvnw package -DskipTests
 
 # Run app
 EXPOSE 8080
-CMD ["java", "-jar", "target/404-Found-Group-Assignment-0.0.1-SNAPSHOT.jar"]
+ENTRYPOINT ["java", "-jar", "/app/target/404-Found-Group-Assignment-0.0.1-SNAPSHOT.jar"]

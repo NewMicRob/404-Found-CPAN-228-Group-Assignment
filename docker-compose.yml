@@ -27,6 +27,8 @@ services:
     depends_on:
       db:
         condition: service_healthy
+    profiles:
+        - qa
 
   dev-app:
     build: .
@@ -38,6 +40,8 @@ services:
     depends_on:
       db:
         condition: service_healthy
+    profiles:
+        - dev
 
 volumes:
   mysql_data:

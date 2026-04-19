@@ -92,20 +92,34 @@ The page includes an update modal for editing user details.
 
 ### Option 1: Local Development
 1.  Open the project in your IDE (IntelliJ or VS Code).
-2.  Open the Folder `cd 404-Found-CPAN-228-Group-Assignment/`
-3.  The application defaults to the `dev` profile.
-4.  **Access URL:** [http://localhost:8081](http://localhost:8081)
+2.  Navigate to the project folder: `cd 404-Found-CPAN-228-Group-Assignment/`
+3.  Run the app from the terminal: `mvn spring-boot:run`
+4.  Alternative: run the application using the IDE’s Run/Debug Configuration 
+5.  Access the application at: [http://localhost:8080](http://localhost:8081)
+6.  The application automatically starts with the dev profile.
 
 ### Option 2: Docker Deployment
-1.  Ensure Docker Desktop is running.
-2.  Navigate to the project root in your terminal.
-3.  Run the following command:
-    ```bash
-    docker compose up --build -d
-    ```
-4.  **QA Instance:** [http://localhost:8080](http://localhost:8080)
-5.  **Dev Instance:** [http://localhost:8081](http://localhost:8081)
+This project uses Docker Compose profiles to run the application in different environments.
+There are two available profiles:
 
+- dev profile — runs dev-app on port 8081
+- qa profile — runs qa-app on port 8080
+
+#### Run the Dev Environment
+1.  Ensure Docker Desktop is running.
+2.  Navigate to the project folder: `cd 404-Found-CPAN-228-Group-Assignment/`
+3.  Run the following command: `docker compose --profile dev up`
+4.  Access the application at: [http://localhost:8081](http://localhost:8081)
+
+#### Run the QA Environment
+1.  Ensure Docker Desktop is running.
+2.  Navigate to the project folder: `cd 404-Found-CPAN-228-Group-Assignment/`
+3.  Run the following command: `docker compose --profile qa up`
+4.  Access the application at: [http://localhost:8080](http://localhost:8081)
+
+#### Stop All Running Containers
+1. To stop everything: `docker compose down`
+2. To also remove volumes (including MySQL data): `docker compose down -v`
 
 ## Created by
 #### Group 404 Found:
