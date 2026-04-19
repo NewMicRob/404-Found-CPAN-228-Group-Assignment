@@ -8,7 +8,7 @@ Users can manage products across different categories, as well as categories and
 
 The application includes registration and login functionality. Admin users can additionally manage other users through a dedicated admin panel.
 
-The system is built as a web application and runs in Docker for easier setup and deployment. It uses an H2 in-memory database for the main application, and a MySQL database in a separate container for QA/testing purpos
+The system is built as a web application and runs in Docker for easier setup and deployment. It uses an H2 in-memory database for the main application, and a MySQL database in a separate container for QA/testing purposes
 
 
 ## Domain
@@ -96,15 +96,49 @@ The page includes an update modal for editing user details.
 3.  The application defaults to the `dev` profile.
 4.  **Access URL:** [http://localhost:8081](http://localhost:8081)
 
-### Option 2: Docker Deployment
+
+### Option 2: Docker Profile dev
 1.  Ensure Docker Desktop is running.
 2.  Navigate to the project root in your terminal.
 3.  Run the following command:
-    ```bash
-    docker compose up --build -d
-    ```
-4.  **QA Instance:** [http://localhost:8080](http://localhost:8080)
-5.  **Dev Instance:** [http://localhost:8081](http://localhost:8081)
+  ```bash
+  docker compose --profile dev up -d    
+  ```
+
+
+### Option 3: Docker Profile qa
+1.  Ensure Docker Desktop is running.
+2.  Navigate to the project root in your terminal.
+3.  Run the following command:
+  ```bash
+  docker compose --profile qa up -d
+  ```
+
+
+### Option 4: Dual Docker Profile run
+1.  Ensure Docker Desktop is running.
+2.  Navigate to the project root in your terminal.
+3.  Run the following command:
+  ```bash
+  docker compose --profile qa --profile dev up -d
+  ```
+
+
+### QA Profile: [http://localhost:8080](http://localhost:8080)
+### Dev Profile: [http://localhost:8081](http://localhost:8081)
+
+
+### Checks
+**Check Status:**
+  ```bash
+  docker compose ps
+  ```
+
+
+### To Stop all Services:
+  ```bash
+  docker compose --profile qa --profile dev up -d
+  ```
 
 
 ## Created by
@@ -113,7 +147,7 @@ The page includes an update modal for editing user details.
   - My background is in accounting, and developing this warehouse management system allows me to combine my programming skills with my accounting experience.
     I’m excited to bring this project to life.
 - **[Michael Newman](https://github.com/NewMicRob)**
-  - My name is Michael R Newman, I am looking forward to creating our webisite as a member of 404 Found,
+  - My name is Michael R Newman, I am looking forward to creating our website as a member of 404 Found,
     being that this is my final semester in the computer programming program this will be one of my final projects while being enrolled in the Computer Programming Program at Humber Polytechnic.
 
 
