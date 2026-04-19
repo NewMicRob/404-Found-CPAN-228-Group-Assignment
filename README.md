@@ -92,7 +92,7 @@ The page includes an update modal for editing user details.
 
 ### Option 1: Local Development
 1.  Open the project in your IDE (IntelliJ or VS Code).
-2.  Run the application via the `StockflowApplication.java` file.
+2.  Open the Folder `cd 404-Found-CPAN-228-Group-Assignment/`
 3.  The application defaults to the `dev` profile.
 4.  **Access URL:** [http://localhost:8081](http://localhost:8081)
 
