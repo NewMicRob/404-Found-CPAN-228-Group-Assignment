@@ -33,7 +33,7 @@ The system has three types of users with different permissions:
 
 - Admin – has full access to everything, including the Admin tab. Can manage categories, warehouses, and all system data.
 - Staff – can view all pages and reports and update data, but cannot access admin features like creating categories or warehouses.
-- Viewer – can only view data and reports, without
+- Viewer – can only view data and reports, without editing capabilities.
 
 ## UI Layout
 
@@ -93,8 +93,12 @@ The page includes an update modal for editing user details.
 ### Option 1: Local Development
 1.  Open the project in your IDE (IntelliJ or VS Code).
 2.  Open the Folder `cd 404-Found-CPAN-228-Group-Assignment/`
-3.  The application defaults to the `dev` profile.
-4.  **Access URL:** [http://localhost:8081](http://localhost:8081)
+3.  Run the following command
+  ```bash
+  mvn spring-boot:run
+  ```
+4.  The application defaults to the `dev` profile.
+5.  **Access URL:** [http://localhost:8081](http://localhost:8081)
 
 
 ### Option 2: Docker Profile dev
@@ -135,9 +139,15 @@ The page includes an update modal for editing user details.
   ```
 
 
-### To Stop all Services:
+### To Stop all Services
   ```bash
-  docker compose --profile qa --profile dev up -d
+  docker compose --profile qa --profile dev down
+  ```
+
+
+### Fresh start
+  ```bash
+  docker compose --profile qa --profile dev down -v
   ```
 
 
