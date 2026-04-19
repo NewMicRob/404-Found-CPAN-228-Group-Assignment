@@ -132,8 +132,7 @@ The page includes an update modal for editing user details.
 ### Dev Profile: [http://localhost:8081](http://localhost:8081)
 
 
-### Checks
-**Check Status:**
+### Check status
   ```bash
   docker compose ps
   ```
